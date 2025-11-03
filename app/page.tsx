@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Footer from "./Footer";
+import Form from "./Form";
 
 export default function Home() {
   return (
@@ -177,6 +179,8 @@ export default function Home() {
         </div>
 
       </main>
+      <Form/>
+      <Footer />
     </div>
   );
 }
