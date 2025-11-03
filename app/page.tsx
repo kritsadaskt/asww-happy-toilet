@@ -5,9 +5,8 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-white via-purple-50 to-white">
       {/* Key Visual Section */}
       <section id="kv" className="w-full bg-white">
-        <div className="container mx-auto">
-          <img src="https://assetwise.co.th/happy-toilet-test/asw-happy-toilet-kv.png" alt="ASW Happy Toilet KV" className="w-full h-auto md:h-[520px] object-contain" />
-        </div>
+        <Image src="HappyToilet_Desktop_banner.jpg" alt="ASW Happy Toilet KV" className="w-full h-auto hidden md:block" width={1866} height={933}/>
+          <img src="https://assetwise.co.th/happy-toilet-test/asw-happy-toilet-kv.png" alt="ASW Happy Toilet KV" className="w-full h-auto md:h-[520px] object-contain md:hidden" />
       </section>
 
       {/* Main Content */}
