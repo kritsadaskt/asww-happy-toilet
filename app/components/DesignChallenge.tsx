@@ -2,7 +2,7 @@ export default function DesignChallenge() {
   return(
     <>
       <section className="mb-8 sm:mb-12 bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4" style={{ borderTopColor: '#ff37ad' }}>
-        <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4" style={{ color: '#371c5d' }}>รายละเอียดงานที่ต้องการ</h2>
+        <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4" style={{ color: '#371c5d' }}>โจทย์การออกแบบ</h2>
         <p className="text-sm sm:text-base leading-relaxed mb-4 sm:mb-6" style={{ color: '#371c5d' }}>
           เป็นอาคารห้องน้ำสาธารณะ stand alone สำหรับผู้ชาย ผู้หญิง และ handicap ที่สามารถสร้าง หรือติดตั้งในที่สาธารณะต่างๆ ที่ใดก็ได้ (ทั้งนี้สามารถระบุในผลงานได้ว่า จะสามารถสร้างในพื้นที่แบบใด เช่น วัด สวนสาธารณะ วนอุทยาน เป็นต้น) โดยมีรายละเอียดการใช้งาน ดังนี้
         </p>
@@ -41,7 +41,7 @@ export default function DesignChallenge() {
             <li>Elevations ทุกด้าน</li>
             <li>Sections อย่างน้อย 2 รูป</li>
             <li>ภาพ Perspective อย่างน้อย 2 รูป เพื่อแสดงภาพของอาคารที่จะเกิดขึ้นจริง ในสภาพแวดล้อม</li>
-            <li>Clips/Animation เพื่อแสดงผลงานให้ชัดเจนขึ้น (สามารถเป็น option  20 ปี AssetWise พร้อมสร้างความสุข...ให้ทุกจังหวะของชีวิต"</li>
+            <li>Clips/Animation เพื่อแสดงผลงานให้ชัดเจนขึ้น</li>
           </ul>
         </div>
       </section>
