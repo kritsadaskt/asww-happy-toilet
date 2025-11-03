@@ -35,22 +35,13 @@ export default function Home() {
 
         {/* Call to Action */}
         <section className="w-full mb-8 sm:mb-12 p-6 sm:p-8 text-center shadow-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #9862bf 0%, #ff37ad 100%)' }}>
-          <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 max-w-5xl flex flex-col md:flex-row justify-between items-center">
-            <div className="w-full md:w-4/5 text-left text-white text-xl mb-5 md:mb-0">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <p><strong>กำหนดส่งผลงาน :</strong> 15 พย. - 17 ธค. 2568</p>
-                </div>
-                <div>
-                  <p><strong>ประกาศผล :</strong> 25 ธค.2568</p>
-                </div>
-                <div className="md:col-span-2">
-                  <p><strong>ประเภทการส่งผลงาน :</strong> Digital File or PrintOut</p>
-                </div>
-              </div>
+          <div className="container mx-auto px-0 py-8 sm:py-12 max-w-5xl flex flex-col md:flex-row justify-between items-center">
+            <div className="w-full md:w-4/5 text-left text-white text-xl mb-5 md:mb-0 flex flex-col gap-2">
+              <p><strong>กำหนดส่งผลงาน :</strong> 15 พย. - 17 ธค. 2568</p>
+              <p><strong>ประกาศผล :</strong> 25 ธค.2568</p>
             </div>
-            <div className="w-full md:w-1/5">
-              <a href="#form" className="bg-white text-purple-900 px-4 py-2 rounded-lg text-xl font-medium">Enter Contest</a>
+            <div className="w-full md:w-1/5 flex justify-center md:justify-end">
+              <a href="#form" className="bg-white text-purple-900 px-4 py-2 rounded-lg text-xl font-medium">Apply Now</a>
             </div>
           </div>
         </section>

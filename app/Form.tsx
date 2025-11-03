@@ -100,7 +100,7 @@ export default function Form() {
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#4a2575'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#371c5d'}
               >
-                ENTER CONTEST
+                Apply Now
               </button>
             </form>
           </div>
