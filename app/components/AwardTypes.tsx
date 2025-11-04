@@ -21,20 +21,20 @@ export default function AwardTypes() {
             <tr className="even:bg-purple-50">
               <td className="px-4 py-3 text-left text-[#371c5d]">ระดับ บริษัทผู้ออกแบบวิชาชีพ</td>
               <td className="px-4 py-3 text-center text-[#371c5d] font-bold">50,000</td>
-              <td className="px-4 py-3 text-center text-[#371c5d] font-bold">30,000</td>
-              <td className="px-4 py-3 text-center text-[#371c5d] font-bold">20,000</td>
+              <td className="px-4 py-3 text-center text-[#371c5d]">30,000</td>
+              <td className="px-4 py-3 text-center text-[#371c5d]">20,000</td>
             </tr>
             <tr className="even:bg-purple-50">
               <td className="px-4 py-3 text-left text-[#371c5d]">ระดับ ผู้ออกแบบอิสระ และประชาชนทั่วไป</td>
               <td className="px-4 py-3 text-center text-[#371c5d] font-bold">50,000</td>
-              <td className="px-4 py-3 text-center text-[#371c5d] font-bold">30,000</td>
-              <td className="px-4 py-3 text-center text-[#371c5d] font-bold">20,000</td>
+              <td className="px-4 py-3 text-center text-[#371c5d]">30,000</td>
+              <td className="px-4 py-3 text-center text-[#371c5d]">20,000</td>
             </tr>
             <tr className="even:bg-purple-50">
               <td className="px-4 py-3 text-left text-[#371c5d]">ระดับ นักเรียน นิสิต นักศึกษา</td>
               <td className="px-4 py-3 text-center text-[#371c5d] font-bold">30,000</td>
-              <td className="px-4 py-3 text-center text-[#371c5d] font-bold">20,000</td>
-              <td className="px-4 py-3 text-center text-[#371c5d] font-bold">10,000</td>
+              <td className="px-4 py-3 text-center text-[#371c5d]">20,000</td>
+              <td className="px-4 py-3 text-center text-[#371c5d]">10,000</td>
             </tr>
           </tbody>
         </table>
