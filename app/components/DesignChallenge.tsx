@@ -15,29 +15,29 @@ export default function DesignChallenge() {
                 <thead>
                   <tr style={{ background: 'linear-gradient(90deg,#ff37ad 0%,#9862bf 100%)' }}>
                     <th className="px-4 py-3 text-left text-white font-semibold">ประเภทห้องน้ำ</th>
-                    <th className="px-4 py-3 text-left text-white font-semibold">อ่างล้างหน้า</th>
-                    <th className="px-4 py-3 text-left text-white font-semibold">ห้องส้วม</th>
-                    <th className="px-4 py-3 text-left text-white font-semibold">โถปัสสาวะ</th>
+                    <th className="px-4 py-3 text-center text-white font-semibold">อ่างล้างหน้า</th>
+                    <th className="px-4 py-3 text-center text-white font-semibold">ห้องส้วม</th>
+                    <th className="px-4 py-3 text-center text-white font-semibold">โถปัสสาวะ</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="even:bg-purple-50">
                     <td className="px-4 py-3 text-[#371c5d]">ห้องน้ำชาย</td>
-                    <td className="px-4 py-3 text-[#371c5d]">2</td>
-                    <td className="px-4 py-3 text-[#371c5d]">2</td>
-                    <td className="px-4 py-3 text-[#371c5d]">2</td>
+                    <td className="px-4 py-3 text-center text-[#371c5d]">2</td>
+                    <td className="px-4 py-3 text-center text-[#371c5d]">2</td>
+                    <td className="px-4 py-3 text-center text-[#371c5d]">2</td>
                   </tr>
                   <tr className="even:bg-purple-50">
                     <td className="px-4 py-3 text-[#371c5d]">ห้องน้ำหญิง</td>
-                    <td className="px-4 py-3 text-[#371c5d]">2</td>
-                    <td className="px-4 py-3 text-[#371c5d]">2</td>
-                    <td className="px-4 py-3 text-[#371c5d]">-</td>
+                    <td className="px-4 py-3 text-center text-[#371c5d]">2</td>
+                    <td className="px-4 py-3 text-center text-[#371c5d]">2</td>
+                    <td className="px-4 py-3 text-center text-[#371c5d]">-</td>
                   </tr>
                   <tr className="even:bg-purple-50">
                     <td className="px-4 py-3 text-[#371c5d]">ห้องน้ำสำหรับ handicap</td>
-                    <td className="px-4 py-3 text-[#371c5d]">1</td>
-                    <td className="px-4 py-3 text-[#371c5d]">1</td>
-                    <td className="px-4 py-3 text-[#371c5d]">1</td>
+                    <td className="px-4 py-3 text-center text-[#371c5d]">1</td>
+                    <td className="px-4 py-3 text-center text-[#371c5d]">1</td>
+                    <td className="px-4 py-3 text-center text-[#371c5d]">1</td>
                   </tr>
                 </tbody>
               </table>
