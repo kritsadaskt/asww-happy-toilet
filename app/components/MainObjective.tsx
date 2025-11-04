@@ -1,6 +1,6 @@
 export default function MainObjective() {
   return(
-    <section className="mb-8 sm:mb-12 bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4" style={{ borderTopColor: '#ff37ad' }}>
+    <section id="main-objective" className="mb-8 sm:mb-12 bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4" style={{ borderTopColor: '#ff37ad' }}>
       <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4" style={{ color: '#371c5d' }}>วัตถุประสงค์หลัก</h2>
       <p className="text-sm sm:text-base leading-relaxed mb-4 sm:mb-6" style={{ color: '#371c5d' }}>
         การประกวดครั้งนี้มีจุดมุ่งหมายเพื่อสร้างสรรค์ ต้นแบบห้องน้ำสาธารณะคุณภาพสูง ที่สามารถนำไปก่อสร้างหรือติดตั้งในพื้นที่สาธารณะทั่วประเทศไทยได้อย่างหลากหลาย ไม่ว่าจะเป็น สวนสาธารณะ, วนอุทยานฯ, วัด, โรงเรียน หรือหน่วยงานต่างๆ โดยเน้นการออกแบบที่ตอบโจทย์หลัก 5 ประการ ดังนี้:
