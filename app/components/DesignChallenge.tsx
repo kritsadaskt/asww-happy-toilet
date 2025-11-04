@@ -57,7 +57,7 @@ export default function DesignChallenge() {
                 <li>Elevations ทุกด้าน</li>
                 <li>Sections อย่างน้อย 2 รูป</li>
                 <li>ภาพ Perspective อย่างน้อย 2 รูป เพื่อแสดงภาพของอาคารที่จะเกิดขึ้นจริง ในสภาพแวดล้อม</li>
-                <li>Clips/Animation เพื่อแสดงผลงานให้ชัดเจนขึ้น</li>
+                <li>Clips/Animation เพื่อแสดงผลงานให้ชัดเจนขึ้น (ถ้ามี)</li>
               </ul>
             </div>
           </section>

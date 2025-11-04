@@ -14,7 +14,7 @@ export default function ScoringCategory() {
               </div>
               <div className="p-2 md:p-7">
                 <Image src="/Aesthetic.png" alt="Aesthetics" className="w-full aspect-square mb-4" width={500} height={500} />
-                <h3 className="text-lg sm:text-3xl font-semibold mb-2 sm:mb-3 text-center text-white">Aesthetics</h3>
+                <h3 className="text-lg sm:text-3xl font-semibold mb-2 sm:mb-3 text-center text-white">Aesthetic</h3>
                 <p className="text-sm sm:text-base text-center text-white">ความสวยงาม กลมกลืน และสร้างบรรยากาศที่น่าประทับใจ</p>
               </div>
               <div className="p-2 md:p-7">
