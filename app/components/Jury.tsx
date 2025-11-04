@@ -15,7 +15,7 @@ export default function Jury() {
         </section>
       </div>
       <div className="w-full md:w-1/2">
-        <Image src="/The-Happy-Toilet-Album-7.png" alt="ASW Happy Toilet KV" className="w-full aspect-square" width={1000} height={1000} />
+        <Image src="/jury.jpg" alt="ASW Happy Toilet KV" className="w-full aspect-square" width={1000} height={1000} />
       </div>
     </div>
   )
