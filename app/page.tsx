@@ -34,7 +34,7 @@ export default function Home() {
         </div>
 
         {/* Call to Action */}
-        <section className="w-full mb-8 sm:mb-12 p-6 sm:p-8 text-center shadow-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #9862bf 0%, #ff37ad 100%)' }}>
+        <section className="w-full p-6 sm:p-8 text-center shadow-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #9862bf 0%, #ff37ad 100%)' }}>
           <div className="container mx-auto px-0 py-8 max-w-5xl text-white text-xl md:text-3xl flex flex-col gap-2">
             <p><strong>กำหนดส่งผลงาน :</strong> 15 พ.ย. - 17 ธ.ค. 2568</p>
             <p><strong>ประกาศผล :</strong> 25 ธ.ค. 2568</p>
@@ -42,7 +42,7 @@ export default function Home() {
         </section>
 
       </main>
-      <Form/>
+      {/* <Form/> */}
       <Footer />
     </div>
   );
