@@ -49,8 +49,7 @@ export default function DesignChallenge() {
       <div className="flex flex-col md:flex-row gap-4 mb-10">
         <div className="w-full">
           <section className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4" style={{ borderTopColor: '#9862bf' }}>
-            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4" style={{ color: '#371c5d' }}>รายละเอียดผลงาน</h2>
-            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4" style={{ color: '#371c5d' }}>เนื้องานประกอบไปด้วย</h3>
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4" style={{ color: '#371c5d' }}>รายละเอียดการนำเสนอ</h2>
             <div className="space-y-1 sm:space-y-2 text-sm sm:text-base pl-2 sm:pl-4" style={{ color: '#371c5d' }}>
               <ul className="list-disc pl-6">
                 <li>แนวความคิดในการออกแบบ</li>

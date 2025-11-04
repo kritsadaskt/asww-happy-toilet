@@ -5,7 +5,7 @@ export default function ScoringCategory() {
       <div className="flex flex-col md:flex-row gap-4 mb-10">
         <div className="w-full">
           <section className="bg-gradient-to-b from-[#440d80] to-[#c365d6] rounded-lg shadow-lg p-4 sm:p-6 md:p-8">
-            <h2 className="text-xl text-center sm:text-3xl font-bold mb-3 sm:mb-4  text-white">หมวดการให้คะแนน</h2>
+            <h2 className="text-xl text-center sm:text-3xl font-bold mb-3 sm:mb-4  text-white">หลักเกณฑ์การตัดสิน</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div className="p-2 md:p-7">
                 <Image src="/Function.png" alt="Function" className="w-full aspect-square mb-4" width={500} height={500} />
