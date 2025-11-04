@@ -36,7 +36,7 @@ export default function Home() {
         {/* Call to Action */}
         <section className="w-full p-6 sm:p-8 text-center shadow-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #9862bf 0%, #ff37ad 100%)' }}>
           <div className="container mx-auto px-0 py-8 max-w-5xl text-white text-xl md:text-3xl flex flex-col gap-2">
-            <p><strong>กำหนดส่งผลงาน :</strong> 17 พ.ย. - 17 ธ.ค. 2568</p>
+            <p><strong>กำหนดส่งผลงาน :</strong> 17 พ.ย. - 31 ธ.ค. 2568</p>
             <p><strong>ประกาศผล :</strong> 16 ม.ค. 2569</p>
           </div>
         </section>
