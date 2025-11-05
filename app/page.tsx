@@ -42,7 +42,7 @@ export default function Home() {
         </section>
 
       </main>
-      {/* <Form/> */}
+      <Form/>
       <Footer />
     </div>
   );
