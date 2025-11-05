@@ -123,7 +123,7 @@ export default function Form() {
               
               <div>
                 <label htmlFor="workTitle" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
-                  หัวข้องาน
+                  ชื่อผลงาน
                 </label>
                 <input
                   type="text"
@@ -131,19 +131,6 @@ export default function Form() {
                   name="workTitle"
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="หัวข้องาน"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="description" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
-                  แนวคิดของผลงาน (โดยย่อ)
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="แนวคิดของผลงาน (โดยย่อ)"
                 />
               </div>
 
