@@ -80,6 +80,22 @@ export default function Form() {
                   />
                 </div>
                 <div>
+                  <label htmlFor="telephone" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                    เบอร์โทรศัพท์
+                  </label>
+                  <input
+                    type="tel"
+                    id="telephone"
+                    name="telephone"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    placeholder="เบอร์โทรศัพท์"
+                    pattern="[0-9]*"
+                  />
+                </div>
+                
+              </div>
+
+              <div>
                   <label htmlFor="email" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
                     อีเมล
                   </label>
@@ -91,7 +107,6 @@ export default function Form() {
                     placeholder="อีเมล"
                   />
                 </div>
-              </div>
 
               <div>
                   <label htmlFor="address" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
@@ -121,14 +136,14 @@ export default function Form() {
               
               <div>
                 <label htmlFor="description" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
-                  คำอธิบาย
+                  แนวคิดของผลงาน (โดยย่อ)
                 </label>
                 <textarea
                   id="description"
                   name="description"
                   rows={4}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="คำอธิบาย"
+                  placeholder="แนวคิดของผลงาน (โดยย่อ)"
                 />
               </div>
 
