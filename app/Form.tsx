@@ -1,5 +1,9 @@
 'use client'
+import { useState } from 'react'
+
 export default function Form() {
+  const [category, setCategory] = useState<string>('')
+
   return (
     <>
       {/* Contest Submission Section */}
@@ -11,6 +15,57 @@ export default function Form() {
               นำส่งผลงาน
             </h2>
             <form className="space-y-4">
+              {/* Category Selector - Moved to Top */}
+              <div>
+                <label htmlFor="category" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                  ประเภทการประกวด
+                </label>
+                <select
+                  id="category"
+                  name="category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="" disabled>เลือกประเภทการประกวด</option>
+                  <option value="company">บริษัทผู้ออกแบบวิชาชีพ</option>
+                  <option value="individual">ผู้ออกแบบอิสระ และประชาชนทั่วไป</option>
+                  <option value="student">นักเรียน นิสิต นักศึกษา</option>
+                </select>
+              </div>
+
+              {/* Conditional Field: Company Name */}
+              {category === 'company' && (
+                <div>
+                  <label htmlFor="companyName" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                    ชื่อบริษัท
+                  </label>
+                  <input
+                    type="text"
+                    id="companyName"
+                    name="companyName"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    placeholder="ชื่อบริษัท"
+                  />
+                </div>
+              )}
+
+              {/* Conditional Field: School Name */}
+              {category === 'student' && (
+                <div>
+                  <label htmlFor="schoolName" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                    ชื่อสถาบันการศึกษา
+                  </label>
+                  <input
+                    type="text"
+                    id="schoolName"
+                    name="schoolName"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    placeholder="ชื่อสถาบันการศึกษา"
+                  />
+                </div>
+              )}
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
@@ -37,6 +92,19 @@ export default function Form() {
                   />
                 </div>
               </div>
+
+              <div>
+                  <label htmlFor="address" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                    ที่อยู่
+                  </label>
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    placeholder="ที่อยู่"
+                  />
+                </div>
               
               <div>
                 <label htmlFor="workTitle" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
@@ -49,23 +117,6 @@ export default function Form() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                   placeholder="หัวข้องาน"
                 />
-              </div>
-
-              <div>
-                <label htmlFor="category" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
-                  ประเภทการประกวด
-                </label>
-                <select
-                  id="category"
-                  name="category"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  defaultValue=""
-                >
-                  <option value="" disabled>เลือกประเภทการประกวด</option>
-                  <option value="company">บริษัทผู้ออกแบบวิชาชีพ</option>
-                  <option value="individual">ผู้ออกแบบอิสระ และประชาชนทั่วไป</option>
-                  <option value="student">นักเรียน นิสิต นักศึกษา</option>
-                </select>
               </div>
               
               <div>
