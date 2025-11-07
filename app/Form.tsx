@@ -92,8 +92,8 @@ export default function Form() {
     setIsSubmitting(true)
 
     try {
-      // Generate contestant_id
-      const contestant_id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+      // Generate secure contestant_id using crypto API
+      const contestant_id = crypto.randomUUID()
 
       // Create FormData for file upload
       const formData = new FormData()

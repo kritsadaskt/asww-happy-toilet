@@ -1,30 +1,68 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
-import { DynamoDBDocumentClient, PutCommand } from '@aws-sdk/lib-dynamodb'
+import { DynamoDBDocumentClient, PutCommand, GetCommand } from '@aws-sdk/lib-dynamodb'
 import nodemailer from 'nodemailer'
+import { randomUUID } from 'crypto'
+
+// Validate required environment variables
+const requiredEnvVars = [
+  'HT_REGION',
+  'HT_ACCESS_KEY_ID',
+  'HT_SECRET_ACCESS_KEY',
+  'HT_S3_BUCKET_NAME',
+  'HT_DYNAMODB_TABLE',
+  'HT_EMAIL_ADDR',
+  'HT_EMAIL_PWD'
+]
+
+for (const envVar of requiredEnvVars) {
+  if (!process.env[envVar]) {
+    console.error(`Missing required environment variable: ${envVar}`)
+    throw new Error(`Server configuration error: Missing ${envVar}`)
+  }
+}
 
 // Configure AWS clients using HT_ prefixed environment variables
 const s3Client = new S3Client({
-  region: process.env.HT_REGION || 'ap-southeast-1',
+  region: process.env.HT_REGION!,
   credentials: {
-    accessKeyId: process.env.HT_ACCESS_KEY_ID || '',
-    secretAccessKey: process.env.HT_SECRET_ACCESS_KEY || '',
+    accessKeyId: process.env.HT_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.HT_SECRET_ACCESS_KEY!,
   },
 })
 
 const dynamoDBClient = new DynamoDBClient({
-  region: process.env.HT_REGION || 'ap-southeast-1',
+  region: process.env.HT_REGION!,
   credentials: {
-    accessKeyId: process.env.HT_ACCESS_KEY_ID || '',
-    secretAccessKey: process.env.HT_SECRET_ACCESS_KEY || '',
+    accessKeyId: process.env.HT_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.HT_SECRET_ACCESS_KEY!,
   },
 })
 
 const docClient = DynamoDBDocumentClient.from(dynamoDBClient)
 
-const BUCKET_NAME = process.env.HT_S3_BUCKET_NAME || 'happytoiletproject_storage'
-const TABLE_NAME = process.env.HT_DYNAMODB_TABLE || 'happytoilet_contestants'
+const BUCKET_NAME = process.env.HT_S3_BUCKET_NAME!
+const TABLE_NAME = process.env.HT_DYNAMODB_TABLE!
+
+// Rate limiting configuration
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000 // 1 hour in milliseconds
+const MAX_REQUESTS_PER_WINDOW = 3
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
+
+// File validation constants
+const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
+const MAX_FILES_COUNT = 10
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png']
+const ALLOWED_PDF_TYPE = 'application/pdf'
+const ALLOWED_MIME_TYPES = [...ALLOWED_IMAGE_TYPES, ALLOWED_PDF_TYPE]
+
+// Input validation constraints
+const MAX_STRING_LENGTH = 500
+const MAX_TEXT_LENGTH = 2000
+const MAX_WORK_TITLE_LENGTH = 200
+const MAX_EMAIL_LENGTH = 100
+const MAX_PHONE_LENGTH = 20
 
 // Helper function to get client IP address
 function getClientIP(request: NextRequest): string {
@@ -38,6 +76,123 @@ function getClientIP(request: NextRequest): string {
     return realIP
   }
   return 'Unknown'
+}
+
+// Rate limiting function
+function checkRateLimit(ipAddress: string): boolean {
+  const now = Date.now()
+  const clientData = rateLimitMap.get(ipAddress)
+
+  // Clean up old entries periodically
+  if (rateLimitMap.size > 10000) {
+    for (const [ip, data] of rateLimitMap.entries()) {
+      if (data.resetTime < now) {
+        rateLimitMap.delete(ip)
+      }
+    }
+  }
+
+  if (!clientData || clientData.resetTime < now) {
+    // First request or window expired
+    rateLimitMap.set(ipAddress, {
+      count: 1,
+      resetTime: now + RATE_LIMIT_WINDOW
+    })
+    return true
+  }
+
+  if (clientData.count >= MAX_REQUESTS_PER_WINDOW) {
+    return false // Rate limit exceeded
+  }
+
+  // Increment count
+  clientData.count++
+  return true
+}
+
+// Escape HTML entities to prevent XSS
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;")
+}
+
+// Sanitize input to prevent injection attacks
+function sanitizeInput(input: string, maxLength: number): string {
+  if (!input) return ''
+  
+  // Remove null bytes and other control characters
+  let sanitized = input.replace(/[\x00-\x08\x0B-\x0C\x0E-\x1F\x7F]/g, '')
+  
+  // Trim whitespace
+  sanitized = sanitized.trim()
+  
+  // Enforce max length
+  if (sanitized.length > maxLength) {
+    sanitized = sanitized.substring(0, maxLength)
+  }
+  
+  return sanitized
+}
+
+// Validate email format
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  return emailRegex.test(email) && email.length <= MAX_EMAIL_LENGTH
+}
+
+// Validate phone number (Thai format)
+function isValidPhone(phone: string): boolean {
+  const phoneRegex = /^[0-9]{9,10}$/
+  return phoneRegex.test(phone.replace(/[-\s]/g, ''))
+}
+
+// Detect file type from magic numbers (file signature)
+function detectFileType(buffer: Buffer): string | null {
+  // Check magic numbers for common file types
+  if (buffer.length < 4) return null
+  
+  // JPEG (FF D8 FF)
+  if (buffer[0] === 0xFF && buffer[1] === 0xD8 && buffer[2] === 0xFF) {
+    return 'image/jpeg'
+  }
+  
+  // PNG (89 50 4E 47)
+  if (buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4E && buffer[3] === 0x47) {
+    return 'image/png'
+  }
+  
+  // PDF (25 50 44 46)
+  if (buffer[0] === 0x25 && buffer[1] === 0x50 && buffer[2] === 0x44 && buffer[3] === 0x46) {
+    return 'application/pdf'
+  }
+  
+  return null
+}
+
+// Validate uploaded file
+function validateFile(file: File, buffer: Buffer): { valid: boolean; error?: string } {
+  // Check file size
+  if (file.size > MAX_FILE_SIZE) {
+    return { valid: false, error: `File ${file.name} exceeds maximum size of 10MB` }
+  }
+  
+  // Detect actual file type from content
+  const detectedType = detectFileType(buffer)
+  
+  if (!detectedType) {
+    return { valid: false, error: `File ${file.name} has invalid or unsupported format` }
+  }
+  
+  // Verify detected type matches allowed types
+  if (!ALLOWED_MIME_TYPES.includes(detectedType)) {
+    return { valid: false, error: `File ${file.name} type not allowed. Only JPEG, PNG, and PDF files are accepted` }
+  }
+  
+  return { valid: true }
 }
 
 // Helper function to format file size
@@ -62,8 +217,12 @@ function createEmailTransporter() {
   })
 }
 
-// Helper function to generate HTML email template
+// Helper function to generate HTML email template (with XSS protection)
 function generateEmailHTML(contestantName: string, contestantId: string): string {
+  // Escape user-provided data to prevent XSS
+  const safeName = escapeHtml(contestantName)
+  const safeId = escapeHtml(contestantId)
+  
   return `
 <!DOCTYPE html>
 <html lang="th">
@@ -97,7 +256,7 @@ function generateEmailHTML(contestantName: string, contestantId: string): string
                   รหัสผู้เข้าประกวดของคุณ
                 </p>
                 <p style="color: #ffffff; font-size: 24px; font-weight: bold; margin: 0; font-family: 'Courier New', monospace; letter-spacing: 2px;">
-                  ${contestantId}
+                  ${safeId}
                 </p>
               </div>
               
@@ -129,26 +288,76 @@ export async function POST(request: NextRequest) {
   try {
     // Get client IP address
     const ipAddress = getClientIP(request)
+    
+    // Check rate limit
+    if (!checkRateLimit(ipAddress)) {
+      console.warn(`Rate limit exceeded for IP: ${ipAddress}`)
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      )
+    }
+    
     const submittedAt = new Date().toISOString()
     
     // Parse multipart form data
     const formData = await request.formData()
     
-    // Extract form fields
+    // Extract and sanitize form fields
     const contestant_id = formData.get('contestant_id') as string
-    const category = formData.get('category') as string
-    const companyName = formData.get('companyName') as string | null
-    const schoolName = formData.get('schoolName') as string | null
-    const name = formData.get('name') as string
-    const telephone = formData.get('telephone') as string
-    const email = formData.get('email') as string
-    const address = formData.get('address') as string
-    const workTitle = formData.get('workTitle') as string
+    const category = sanitizeInput(formData.get('category') as string || '', MAX_STRING_LENGTH)
+    const companyName = sanitizeInput(formData.get('companyName') as string || '', MAX_STRING_LENGTH)
+    const schoolName = sanitizeInput(formData.get('schoolName') as string || '', MAX_STRING_LENGTH)
+    const name = sanitizeInput(formData.get('name') as string || '', MAX_STRING_LENGTH)
+    const telephone = sanitizeInput(formData.get('telephone') as string || '', MAX_PHONE_LENGTH)
+    const email = sanitizeInput(formData.get('email') as string || '', MAX_EMAIL_LENGTH)
+    const address = sanitizeInput(formData.get('address') as string || '', MAX_TEXT_LENGTH)
+    const workTitle = sanitizeInput(formData.get('workTitle') as string || '', MAX_WORK_TITLE_LENGTH)
 
     // Validate required fields
-    if (!contestant_id || !category || !name || !email) {
+    if (!contestant_id || !category || !name || !email || !workTitle) {
       return NextResponse.json(
         { error: 'Missing required fields' },
+        { status: 400 }
+      )
+    }
+    
+    // Validate category
+    const validCategories = ['company', 'student', 'individual']
+    if (!validCategories.includes(category)) {
+      return NextResponse.json(
+        { error: 'Invalid category' },
+        { status: 400 }
+      )
+    }
+    
+    // Validate email format
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { error: 'Invalid email format' },
+        { status: 400 }
+      )
+    }
+    
+    // Validate phone if provided
+    if (telephone && !isValidPhone(telephone)) {
+      return NextResponse.json(
+        { error: 'Invalid phone number format' },
+        { status: 400 }
+      )
+    }
+    
+    // Validate conditional fields
+    if (category === 'company' && !companyName) {
+      return NextResponse.json(
+        { error: 'Company name is required for company category' },
+        { status: 400 }
+      )
+    }
+    
+    if (category === 'student' && !schoolName) {
+      return NextResponse.json(
+        { error: 'School name is required for student category' },
         { status: 400 }
       )
     }
@@ -160,6 +369,21 @@ export async function POST(request: NextRequest) {
         files.push(value)
       }
     }
+    
+    // Validate file count
+    if (files.length === 0) {
+      return NextResponse.json(
+        { error: 'At least one file is required' },
+        { status: 400 }
+      )
+    }
+    
+    if (files.length > MAX_FILES_COUNT) {
+      return NextResponse.json(
+        { error: `Maximum ${MAX_FILES_COUNT} files allowed` },
+        { status: 400 }
+      )
+    }
 
     // Upload files to S3 and collect URLs and file info
     const fileUrls: string[] = []
@@ -168,13 +392,26 @@ export async function POST(request: NextRequest) {
     for (const file of files) {
       try {
         const fileBuffer = Buffer.from(await file.arrayBuffer())
-        const fileName = `${contestant_id}/${Date.now()}-${file.name}`
+        
+        // Validate file with magic number detection
+        const validation = validateFile(file, fileBuffer)
+        if (!validation.valid) {
+          console.warn(`File validation failed: ${validation.error}`)
+          return NextResponse.json(
+            { error: validation.error || 'Invalid file' },
+            { status: 400 }
+          )
+        }
+        
+        // Sanitize filename to prevent path traversal
+        const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
+        const fileName = `${contestant_id}/${Date.now()}-${sanitizedFileName}`
 
         const uploadParams = {
           Bucket: BUCKET_NAME,
           Key: fileName,
           Body: fileBuffer,
-          ContentType: file.type,
+          ContentType: detectFileType(fileBuffer) || 'application/octet-stream',
         }
 
         await s3Client.send(new PutObjectCommand(uploadParams))
@@ -185,26 +422,27 @@ export async function POST(request: NextRequest) {
         
         // Store file info for metadata
         fileInfoList.push({
-          name: file.name,
+          name: sanitizedFileName,
           size: file.size,
           sizeFormatted: formatFileSize(file.size)
         })
       } catch (error) {
         console.error('Error uploading file:', error)
         return NextResponse.json(
-          { error: 'Failed to upload files to S3' },
+          { error: 'Failed to upload files. Please try again.' },
           { status: 500 }
         )
       }
     }
 
-    // Generate metadata file content in Markdown format
+    // Generate metadata file content in Markdown format (sanitized)
     const categoryText = category === 'company' 
       ? 'บริษัทผู้ออกแบบวิชาชีพ' 
       : category === 'student' 
       ? 'นักเรียน นิสิต นักศึกษา' 
       : 'ผู้ออกแบบอิสระ และประชาชนทั่วไป'
     
+    // Use sanitized values for metadata (already sanitized above)
     let metadataContent = `# Contestant Information - The Happy Toilet Project
 
 ## Contestant ID
@@ -281,8 +519,24 @@ ${contestant_id}
       contestantData.schoolName = schoolName
     }
 
-    // Save to DynamoDB
+    // Save to DynamoDB with duplicate check
     try {
+      // First check if contestant_id already exists (shouldn't happen with UUID, but defensive)
+      const existingItem = await docClient.send(
+        new GetCommand({
+          TableName: TABLE_NAME,
+          Key: { contestant_id },
+        })
+      )
+      
+      if (existingItem.Item) {
+        console.error(`Duplicate contestant_id detected: ${contestant_id}`)
+        return NextResponse.json(
+          { error: 'Submission error. Please try again.' },
+          { status: 409 }
+        )
+      }
+      
       await docClient.send(
         new PutCommand({
           TableName: TABLE_NAME,
@@ -292,7 +546,7 @@ ${contestant_id}
     } catch (error) {
       console.error('Error saving to DynamoDB:', error)
       return NextResponse.json(
-        { error: 'Failed to save contestant data' },
+        { error: 'Unable to process submission. Please try again.' },
         { status: 500 }
       )
     }
@@ -322,9 +576,12 @@ ${contestant_id}
       message: 'Form submitted successfully',
     })
   } catch (error) {
+    // Log detailed error internally but return generic message to client
     console.error('Error processing form submission:', error)
+    
+    // Don't expose internal error details to client
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'An error occurred while processing your submission. Please try again.' },
       { status: 500 }
     )
   }
