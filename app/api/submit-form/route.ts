@@ -301,6 +301,13 @@ function generateEmailHTML(contestantName: string, contestantId: string): string
 }
 
 export async function POST(request: NextRequest) {
+  // Temporary debug logging
+  console.log('Runtime env check:', {
+    hasRegion: !!process.env.HT_REGION,
+    hasBucket: !!process.env.HT_S3_BUCKET_NAME,
+    hasTable: !!process.env.HT_DYNAMODB_TABLE,
+    allEnvKeys: Object.keys(process.env).filter(k => k.startsWith('HT_'))
+  })
   try {
     // Validate environment variables first
     const envValidation = validateEnvironmentVariables()
