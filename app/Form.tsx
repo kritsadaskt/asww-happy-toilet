@@ -124,6 +124,15 @@ export default function Form() {
         body: formData,
       })
 
+      // Check if response is JSON before parsing
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        // Response is not JSON (likely an HTML error page)
+        const textResponse = await response.text()
+        console.error('Non-JSON response received:', textResponse.substring(0, 200))
+        throw new Error('เกิดข้อผิดพลาดในการติดต่อเซิร์ฟเวอร์ กรุณาลองใหม่อีกครั้ง หรือติดต่อผู้ดูแลระบบ')
+      }
+
       const result = await response.json()
 
       if (!response.ok) {

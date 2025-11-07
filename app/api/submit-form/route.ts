@@ -5,7 +5,7 @@ import { DynamoDBDocumentClient, PutCommand, GetCommand } from '@aws-sdk/lib-dyn
 import nodemailer from 'nodemailer'
 import { randomUUID } from 'crypto'
 
-// Validate required environment variables
+// Required environment variables list
 const requiredEnvVars = [
   'HT_REGION',
   'HT_ACCESS_KEY_ID',
@@ -16,34 +16,50 @@ const requiredEnvVars = [
   'HT_EMAIL_PWD'
 ]
 
-for (const envVar of requiredEnvVars) {
-  if (!process.env[envVar]) {
-    console.error(`Missing required environment variable: ${envVar}`)
-    throw new Error(`Server configuration error: Missing ${envVar}`)
+// Validate environment variables and return missing ones
+function validateEnvironmentVariables(): { valid: boolean; missing: string[] } {
+  const missing: string[] = []
+  for (const envVar of requiredEnvVars) {
+    if (!process.env[envVar]) {
+      missing.push(envVar)
+    }
   }
+  return { valid: missing.length === 0, missing }
 }
 
-// Configure AWS clients using HT_ prefixed environment variables
-const s3Client = new S3Client({
-  region: process.env.HT_REGION!,
-  credentials: {
-    accessKeyId: process.env.HT_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.HT_SECRET_ACCESS_KEY!,
-  },
-})
+// Lazy initialization of AWS clients
+let s3Client: S3Client | null = null
+let docClient: DynamoDBDocumentClient | null = null
 
-const dynamoDBClient = new DynamoDBClient({
-  region: process.env.HT_REGION!,
-  credentials: {
-    accessKeyId: process.env.HT_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.HT_SECRET_ACCESS_KEY!,
-  },
-})
+function initializeAWSClients(): { success: boolean; error?: string } {
+  try {
+    if (!s3Client) {
+      s3Client = new S3Client({
+        region: process.env.HT_REGION!,
+        credentials: {
+          accessKeyId: process.env.HT_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.HT_SECRET_ACCESS_KEY!,
+        },
+      })
+    }
 
-const docClient = DynamoDBDocumentClient.from(dynamoDBClient)
+    if (!docClient) {
+      const dynamoDBClient = new DynamoDBClient({
+        region: process.env.HT_REGION!,
+        credentials: {
+          accessKeyId: process.env.HT_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.HT_SECRET_ACCESS_KEY!,
+        },
+      })
+      docClient = DynamoDBDocumentClient.from(dynamoDBClient)
+    }
 
-const BUCKET_NAME = process.env.HT_S3_BUCKET_NAME!
-const TABLE_NAME = process.env.HT_DYNAMODB_TABLE!
+    return { success: true }
+  } catch (error) {
+    console.error('Failed to initialize AWS clients:', error)
+    return { success: false, error: 'Failed to initialize AWS services' }
+  }
+}
 
 // Rate limiting configuration
 const RATE_LIMIT_WINDOW = 60 * 60 * 1000 // 1 hour in milliseconds
@@ -286,6 +302,26 @@ function generateEmailHTML(contestantName: string, contestantId: string): string
 
 export async function POST(request: NextRequest) {
   try {
+    // Validate environment variables first
+    const envValidation = validateEnvironmentVariables()
+    if (!envValidation.valid) {
+      console.error('Missing environment variables:', envValidation.missing)
+      return NextResponse.json(
+        { error: 'Server configuration error. Please contact the administrator.' },
+        { status: 500 }
+      )
+    }
+
+    // Initialize AWS clients
+    const awsInit = initializeAWSClients()
+    if (!awsInit.success) {
+      console.error('Failed to initialize AWS clients')
+      return NextResponse.json(
+        { error: 'Server configuration error. Please contact the administrator.' },
+        { status: 500 }
+      )
+    }
+
     // Get client IP address
     const ipAddress = getClientIP(request)
     
@@ -299,6 +335,8 @@ export async function POST(request: NextRequest) {
     }
     
     const submittedAt = new Date().toISOString()
+    const BUCKET_NAME = process.env.HT_S3_BUCKET_NAME!
+    const TABLE_NAME = process.env.HT_DYNAMODB_TABLE!
     
     // Parse multipart form data
     const formData = await request.formData()
@@ -414,7 +452,7 @@ export async function POST(request: NextRequest) {
           ContentType: detectFileType(fileBuffer) || 'application/octet-stream',
         }
 
-        await s3Client.send(new PutObjectCommand(uploadParams))
+        await s3Client!.send(new PutObjectCommand(uploadParams))
 
         // Construct S3 URL
         const fileUrl = `https://${BUCKET_NAME}.s3.${process.env.HT_REGION}.amazonaws.com/${fileName}`
@@ -490,7 +528,7 @@ ${contestant_id}
         ContentType: 'text/markdown; charset=utf-8',
       }
       
-      await s3Client.send(new PutObjectCommand(metadataUploadParams))
+      await s3Client!.send(new PutObjectCommand(metadataUploadParams))
     } catch (error) {
       console.error('Error uploading metadata file:', error)
       // Continue even if metadata upload fails - don't block the submission
@@ -522,7 +560,7 @@ ${contestant_id}
     // Save to DynamoDB with duplicate check
     try {
       // First check if contestant_id already exists (shouldn't happen with UUID, but defensive)
-      const existingItem = await docClient.send(
+      const existingItem = await docClient!.send(
         new GetCommand({
           TableName: TABLE_NAME,
           Key: { contestant_id },
@@ -537,7 +575,7 @@ ${contestant_id}
         )
       }
       
-      await docClient.send(
+      await docClient!.send(
         new PutCommand({
           TableName: TABLE_NAME,
           Item: contestantData,
