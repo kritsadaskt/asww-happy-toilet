@@ -39,9 +39,6 @@ export default function Home() {
         </section>
 
       </main>
-      {/* <Suspense fallback={<div className="container mx-auto px-4 py-12">Loading...</div>}>
-        <Form/>
-      </Suspense> */}
       <Footer />
     </div>
   );
