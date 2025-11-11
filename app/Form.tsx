@@ -92,12 +92,8 @@ export default function Form() {
     setIsSubmitting(true)
 
     try {
-      // Generate secure contestant_id using crypto API
-      const contestant_id = crypto.randomUUID()
-
       // Create FormData for file upload
       const formData = new FormData()
-      formData.append('contestant_id', contestant_id)
       formData.append('category', category)
       formData.append('name', name)
       formData.append('telephone', telephone)
@@ -139,7 +135,8 @@ export default function Form() {
         throw new Error(result.error || 'เกิดข้อผิดพลาดในการส่งผลงาน')
       }
 
-      // Success - redirect to thank you page
+      // Success - extract contestant_id from response and redirect to thank you page
+      const { contestant_id } = result
       router.push(`/thank-you?id=${contestant_id}`)
     } catch (err) {
       console.error('Submission error:', err)
@@ -319,7 +316,7 @@ export default function Form() {
 
               <div>
                 <label htmlFor="file" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
-                  แนบไฟล์ผลงาน (รูปภาพและ PDF เท่านั้น)
+                  แนบไฟล์ผลงาน (รูปภาพและไฟล์ PDF ขนาดไม่เกิน 10MB)
                 </label>
                 <input
                   type="file"

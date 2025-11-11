@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
-import { DynamoDBDocumentClient, PutCommand, GetCommand } from '@aws-sdk/lib-dynamodb'
+import { DynamoDBDocumentClient, PutCommand, GetCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb'
 import nodemailer from 'nodemailer'
 import { randomUUID } from 'crypto'
 
@@ -58,6 +58,63 @@ function initializeAWSClients(): { success: boolean; error?: string } {
   } catch (error) {
     console.error('Failed to initialize AWS clients:', error)
     return { success: false, error: 'Failed to initialize AWS services' }
+  }
+}
+
+// Generate next contestant ID using atomic counter
+async function getNextContestantId(category: string): Promise<string> {
+  const TABLE_NAME = process.env.HT_DYNAMODB_TABLE!
+  
+  // Determine prefix based on category
+  const prefix = (() => {
+    switch (category) {
+      case 'company':
+        return 'COMP'
+      case 'student':
+        return 'STU'
+      case 'individual':
+        return 'IND'
+      default:
+        return 'IND'
+    }
+  })()
+
+  try {
+    // Use atomic counter with retry logic
+    let retries = 3
+    while (retries > 0) {
+      try {
+        const result = await docClient!.send(
+          new UpdateCommand({
+            TableName: TABLE_NAME,
+            Key: { contestant_id: 'contestant_counter' },
+            UpdateExpression: 'ADD #count :inc',
+            ExpressionAttributeNames: { '#count': 'count' },
+            ExpressionAttributeValues: { ':inc': 1 },
+            ReturnValues: 'UPDATED_NEW'
+          })
+        )
+
+        const count = result.Attributes?.count as number
+        if (!count) {
+          throw new Error('Failed to get counter value')
+        }
+
+        // Format: PREFIX + 5-digit zero-padded number
+        const contestantId = `${prefix}${count.toString().padStart(5, '0')}`
+        console.log(`Generated contestant_id: ${contestantId}`)
+        return contestantId
+      } catch (error) {
+        retries--
+        if (retries === 0) throw error
+        // Wait briefly before retry
+        await new Promise(resolve => setTimeout(resolve, 100))
+      }
+    }
+    throw new Error('Failed to generate contestant ID after retries')
+  } catch (error) {
+    console.error('Error generating contestant ID:', error)
+    throw new Error('Unable to generate contestant ID')
   }
 }
 
@@ -349,7 +406,6 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData()
     
     // Extract and sanitize form fields
-    const contestant_id = formData.get('contestant_id') as string
     const category = sanitizeInput(formData.get('category') as string || '', MAX_STRING_LENGTH)
     const companyName = sanitizeInput(formData.get('companyName') as string || '', MAX_STRING_LENGTH)
     const schoolName = sanitizeInput(formData.get('schoolName') as string || '', MAX_STRING_LENGTH)
@@ -360,7 +416,7 @@ export async function POST(request: NextRequest) {
     const workTitle = sanitizeInput(formData.get('workTitle') as string || '', MAX_WORK_TITLE_LENGTH)
 
     // Validate required fields
-    if (!contestant_id || !category || !name || !email || !workTitle) {
+    if (!category || !name || !email || !workTitle) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -373,6 +429,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'Invalid category' },
         { status: 400 }
+      )
+    }
+
+    // Generate contestant ID using atomic counter
+    let contestant_id: string
+    try {
+      contestant_id = await getNextContestantId(category)
+    } catch (error) {
+      console.error('Failed to generate contestant ID:', error)
+      return NextResponse.json(
+        { error: 'Unable to generate contestant ID. Please try again.' },
+        { status: 500 }
       )
     }
     
@@ -564,24 +632,8 @@ ${contestant_id}
       contestantData.schoolName = schoolName
     }
 
-    // Save to DynamoDB with duplicate check
+    // Save to DynamoDB
     try {
-      // First check if contestant_id already exists (shouldn't happen with UUID, but defensive)
-      const existingItem = await docClient!.send(
-        new GetCommand({
-          TableName: TABLE_NAME,
-          Key: { contestant_id },
-        })
-      )
-      
-      if (existingItem.Item) {
-        console.error(`Duplicate contestant_id detected: ${contestant_id}`)
-        return NextResponse.json(
-          { error: 'Submission error. Please try again.' },
-          { status: 409 }
-        )
-      }
-      
       await docClient!.send(
         new PutCommand({
           TableName: TABLE_NAME,
