@@ -10,8 +10,31 @@ const ibmPlexSansThai = IBM_Plex_Sans_Thai({
 });
 
 export const metadata: Metadata = {
-  title: "The AssetWise Happy Toilet Project",
-  description: "The AssetWise Happy Toilet Project",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://thehappytoiletproject.com"),
+  title: "สุขา สุขี : THE HAPPY TOILET",
+  description: "ชวนคุณออกแบบความสุข…ให้เกิดขึ้นจริง กับโครงการประกวดออกแบบห้องน้ำเพื่อสาธารณะ “สุขา สุขี : THE HAPPY TOILET” พร้อมโอกาสแปลงไอเดียเป็นงานสร้างจริง เงินรางวัลรวมมูลค่า 260,000 บาท",
+  openGraph: {
+    title: "สุขา สุขี : THE HAPPY TOILET",
+    description: "ชวนคุณออกแบบความสุข…ให้เกิดขึ้นจริง กับโครงการประกวดออกแบบห้องน้ำเพื่อสาธารณะ “สุขา สุขี : THE HAPPY TOILET” พร้อมโอกาสแปลงไอเดียเป็นงานสร้างจริง เงินรางวัลรวมมูลค่า 260,000 บาท",
+    url: "https://thehappytoiletproject.com/",
+    siteName: "สุขา สุขี : THE HAPPY TOILET",
+    images: [
+      {
+        url: "/happy_toilet_desktop_banner.png",
+        width: 1866,
+        height: 933,
+        alt: "สุขา สุขี : THE HAPPY TOILET",
+      },
+    ],
+    locale: "th_TH",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "สุขา สุขี : THE HAPPY TOILET",
+    description: "ชวนคุณออกแบบความสุข…ให้เกิดขึ้นจริง กับโครงการประกวดออกแบบห้องน้ำเพื่อสาธารณะ “สุขา สุขี : THE HAPPY TOILET” พร้อมโอกาสแปลงไอเดียเป็นงานสร้างจริง เงินรางวัลรวมมูลค่า 260,000 บาท",
+    images: ["/happy_toilet_desktop_banner.png"],
+  },
 };
 
 export default function RootLayout({
