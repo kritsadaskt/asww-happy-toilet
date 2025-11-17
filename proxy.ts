@@ -17,11 +17,12 @@ export function proxy(request: NextRequest) {
     'Content-Security-Policy',
     [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // Next.js requires unsafe-inline and unsafe-eval
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com", // Added GTM and GA domains
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https:",
       "font-src 'self' data:",
-      "connect-src 'self' https:",
+      "connect-src 'self' https: https://www.googletagmanager.com https://www.google-analytics.com", // Added for GTM dataLayer
+      "frame-src 'self' https://www.googletagmanager.com", // Added for GTM noscript iframe
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'"
