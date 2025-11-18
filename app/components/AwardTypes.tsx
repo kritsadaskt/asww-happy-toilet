@@ -4,6 +4,7 @@ export default function AwardTypes() {
     <div className="container mx-auto px-4 sm:px-6 pt-12 pb-6 max-w-5xl">
         <section className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-secondary">
         <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-primary">ประเภทรางวัล</h2>
+        <p className="text-sm sm:text-base text-primary">สามารถสมัครแบบเดี่ยว หรือแบบกลุ่มได้ ไม่จำกัดจำนวนผู้สมัคร</p>
         <p className="text-sm sm:text-base mb-4 sm:mb-6 text-primary">การจัดประกวดแบบแบ่งเป็น 3 ประเภท ได้แก่</p>
 
         <div className="table-responsive overflow-x-auto border border-gray-200 md:border-none">
