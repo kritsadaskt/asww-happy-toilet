@@ -3,7 +3,7 @@ name: UAT - Deploy to AWS Lightsail
 on:
   push:
     branches:
-      - dev
+      - uat # dev branch is used for testing
 
 jobs:
   deploy:
