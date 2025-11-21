@@ -414,9 +414,11 @@ export async function POST(request: NextRequest) {
     const email = sanitizeInput(formData.get('email') as string || '', MAX_EMAIL_LENGTH)
     const address = sanitizeInput(formData.get('address') as string || '', MAX_TEXT_LENGTH)
     const workTitle = sanitizeInput(formData.get('workTitle') as string || '', MAX_WORK_TITLE_LENGTH)
+    const teamMemberName = sanitizeInput(formData.get('teamMemberName') as string || '', MAX_TEXT_LENGTH)
+    const competitorType = sanitizeInput(formData.get('competitorType') as string || '', MAX_STRING_LENGTH)
 
     // Validate required fields
-    if (!category || !name || !email || !workTitle) {
+    if (!category || !name || !email || !workTitle || !competitorType) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -424,7 +426,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Validate category
-    const validCategories = ['company', 'student', 'individual']
+    const validCategories = ['company', 'student', 'individual', 'team']
     if (!validCategories.includes(category)) {
       return NextResponse.json(
         { error: 'Invalid category' },
@@ -471,6 +473,20 @@ export async function POST(request: NextRequest) {
     if (category === 'student' && !schoolName) {
       return NextResponse.json(
         { error: 'School name is required for student category' },
+        { status: 400 }
+      )
+    }
+
+    if (competitorType === 'team' && !teamMemberName) {
+      return NextResponse.json(
+        { error: 'Team member name is required for team category' },
+        { status: 400 }
+      )
+    }
+
+    if (competitorType === 'team' && teamMemberName.split(',').length < 2) {
+      return NextResponse.json(
+        { error: 'Team member name is required for team category' },
         { status: 400 }
       )
     }
@@ -581,6 +597,8 @@ ${contestant_id}
     metadataContent += `- **Email:** ${email}
 - **Telephone:** ${telephone}
 - **Address:** ${address}
+- **Competitor Type:** ${competitorType}
+${competitorType === 'team' ? `- **Team Member Names:** ${teamMemberName}` : ''}
 
 ## Project Information
 - **Work Title:** ${workTitle}
@@ -622,6 +640,8 @@ ${contestant_id}
       filesCount: files.length,
       submittedAt,
       ipAddress,
+      competitorType,
+      teamMemberName,
     }
 
     // Add conditional fields
@@ -630,6 +650,10 @@ ${contestant_id}
     }
     if (category === 'student' && schoolName) {
       contestantData.schoolName = schoolName
+    }
+
+    if (competitorType === 'team' && teamMemberName) {
+      contestantData.teamMemberName = teamMemberName
     }
 
     // Save to DynamoDB
