@@ -6,6 +6,7 @@ export default function Form() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [category, setCategory] = useState<string>('')
+  const [competitorType, setCompetitorType] = useState<string>('')
   const [companyName, setCompanyName] = useState<string>('')
   const [schoolName, setSchoolName] = useState<string>('')
   const [name, setName] = useState<string>('')
@@ -16,6 +17,7 @@ export default function Form() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
+  const [teamMemberName, setTeamMemberName] = useState<string>('')
 
   // Fill sample data if ?test=1 in URL
   useEffect(() => {
@@ -64,6 +66,16 @@ export default function Form() {
     return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i]
   }
 
+  const handleCompetitorTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('handleCompetitorTypeChange', e.target.value)
+    const value = e.target.value
+    if (value === 'team') {
+      setCompetitorType('team')
+    } else {
+      setCompetitorType('individual')
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError('')
@@ -95,6 +107,9 @@ export default function Form() {
       // Create FormData for file upload
       const formData = new FormData()
       formData.append('category', category)
+      if (competitorType) {
+        formData.append('competitorType', competitorType)
+      }
       formData.append('name', name)
       formData.append('telephone', telephone)
       formData.append('email', email)
@@ -107,6 +122,10 @@ export default function Form() {
       }
       if (category === 'student' && schoolName) {
         formData.append('schoolName', schoolName)
+      }
+
+      if (competitorType === 'team' && teamMemberName) {
+        formData.append('teamMemberName', teamMemberName)
       }
 
       // Append all files
@@ -175,7 +194,7 @@ export default function Form() {
             <form className="space-y-4" onSubmit={handleSubmit}>
               {/* Category Selector - Moved to Top */}
               <div>
-                <label htmlFor="category" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                <label htmlFor="category" className="block font-medium mb-2" style={{ color: '#371c5d' }}>
                   ประเภทการประกวด
                 </label>
                 <select
@@ -193,10 +212,115 @@ export default function Form() {
                 </select>
               </div>
 
+              {/* Competitor Type Radio Buttons */}
+              <div>
+                <label className="block font-medium mb-3" style={{ color: '#371c5d' }}>
+                  ประเภทผู้ส่งผลงาน
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Individual Option */}
+                  <label
+                    htmlFor="competitor-individual"
+                    className={`
+                      relative flex items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all
+                      ${competitorType === 'individual' 
+                        ? 'border-purple-500 bg-purple-50' 
+                        : 'border-gray-300 bg-white hover:border-purple-300 hover:bg-purple-50'
+                      }
+                      ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}
+                    `}
+                  >
+                    <input
+                      type="radio"
+                      id="competitor-individual"
+                      name="competitorType"
+                      value="individual"
+                      checked={competitorType === 'individual'}
+                      onChange={handleCompetitorTypeChange}
+                      disabled={isSubmitting}
+                      className="sr-only"
+                    />
+                    <div className="flex items-center gap-2">
+                      <div className={`
+                        w-[20px] h-[20px] rounded-full border-2 flex items-center justify-center transition-all
+                        ${competitorType === 'individual'
+                          ? 'border-purple-500 bg-purple-500'
+                          : 'border-gray-400 bg-white'
+                        }
+                      `}>
+                        {competitorType === 'individual' && (
+                          <div className="w-[11px] h-[11px] rounded-full bg-white"></div>
+                        )}
+                      </div>
+                      <span className="font-medium" style={{ color: '#371c5d' }}>
+                        เดี่ยว
+                      </span>
+                    </div>
+                  </label>
+
+                  {/* Team Option */}
+                  <label
+                    htmlFor="competitor-team"
+                    className={`
+                      relative flex items-center justify-center p-4 border-2 rounded-lg cursor-pointer transition-all
+                      ${competitorType === 'team' 
+                        ? 'border-purple-500 bg-purple-50' 
+                        : 'border-gray-300 bg-white hover:border-purple-300 hover:bg-purple-50'
+                      }
+                      ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}
+                    `}
+                  >
+                    <input
+                      type="radio"
+                      id="competitor-team"
+                      name="competitorType"
+                      value="team"
+                      checked={competitorType === 'team'}
+                      onChange={handleCompetitorTypeChange}
+                      disabled={isSubmitting}
+                      className="sr-only"
+                    />
+                    <div className="flex items-center gap-2">
+                      <div className={`
+                        w-[20px] h-[20px] rounded-full border-2 flex items-center justify-center transition-all
+                        ${competitorType === 'team'
+                          ? 'border-purple-500 bg-purple-500'
+                          : 'border-gray-400 bg-white'
+                        }
+                      `}>
+                        {competitorType === 'team' && (
+                          <div className="w-[11px] h-[11px] rounded-full bg-white"></div>
+                        )}
+                      </div>
+                      <span className="font-medium" style={{ color: '#371c5d' }}>
+                        กลุ่ม
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              {competitorType === 'team' && (
+                <div>
+                  <label htmlFor="teamMemberName" className="block font-medium mb-2" style={{ color: '#371c5d' }}>
+                    รายชื่อสมาชิก คั่นแยกแต่ละชื่อด้วยเครื่องหมายคอมมา (,)
+                  </label>
+                  <textarea
+                    id="teamMemberName"
+                    name="teamMemberName"
+                    value={teamMemberName}
+                    onChange={(e) => setTeamMemberName(e.target.value)}
+                    disabled={isSubmitting}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    placeholder="ธนพัฒน์ เสนาภัทรา, กฤติน กาญจนอาคม, ธันยกานต์ เลิศประเสริฐชัย" rows={3}
+                  />
+                </div>
+              )}
+
               {/* Conditional Field: Company Name */}
               {category === 'company' && (
                 <div>
-                  <label htmlFor="companyName" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                  <label htmlFor="companyName" className="block font-medium mb-2" style={{ color: '#371c5d' }}>
                     ชื่อบริษัท
                   </label>
                   <input
@@ -215,7 +339,7 @@ export default function Form() {
               {/* Conditional Field: School Name */}
               {category === 'student' && (
                 <div>
-                  <label htmlFor="schoolName" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                  <label htmlFor="schoolName" className="block font-medium mb-2" style={{ color: '#371c5d' }}>
                     ชื่อสถาบันการศึกษา
                   </label>
                   <input
@@ -231,9 +355,15 @@ export default function Form() {
                 </div>
               )}
 
+              {competitorType === 'team' && (
+                <p className="text-sm font-medium mt-7 mb-3 text-gray-500">
+                  กรุณาระบุข้อมูลผู้ติดต่อของกลุ่ม
+                </p>
+              )}
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                  <label htmlFor="name" className="block font-medium mb-2" style={{ color: '#371c5d' }}>
                     ชื่อ-นามสกุล
                   </label>
                   <input
@@ -248,7 +378,7 @@ export default function Form() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="telephone" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                  <label htmlFor="telephone" className="block font-medium mb-2" style={{ color: '#371c5d' }}>
                     เบอร์โทรศัพท์
                   </label>
                   <input
@@ -267,7 +397,7 @@ export default function Form() {
               </div>
 
               <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                  <label htmlFor="email" className="block font-medium mb-2" style={{ color: '#371c5d' }}>
                     อีเมล
                   </label>
                   <input
@@ -283,7 +413,7 @@ export default function Form() {
                 </div>
 
               <div>
-                  <label htmlFor="address" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                  <label htmlFor="address" className="block font-medium mb-2" style={{ color: '#371c5d' }}>
                     ที่อยู่
                   </label>
                   <input
@@ -299,7 +429,7 @@ export default function Form() {
                 </div>
               
               <div>
-                <label htmlFor="workTitle" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                <label htmlFor="workTitle" className="block font-medium mb-2" style={{ color: '#371c5d' }}>
                   ชื่อผลงาน
                 </label>
                 <input
@@ -315,7 +445,7 @@ export default function Form() {
               </div>
 
               <div>
-                <label htmlFor="file" className="block text-sm font-medium mb-2" style={{ color: '#371c5d' }}>
+                <label htmlFor="file" className="block font-medium mb-2" style={{ color: '#371c5d' }}>
                   แนบไฟล์ผลงาน (รูปภาพและไฟล์ PDF ขนาดไม่เกิน 10MB)
                 </label>
                 <input
