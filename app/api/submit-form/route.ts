@@ -680,6 +680,7 @@ ${competitorType === 'team' ? `- **Team Member Names:** ${teamMemberName}` : ''}
       await transporter.sendMail({
         from: `"The Happy Toilet Project" <${process.env.HT_EMAIL_ADDR}>`,
         to: email,
+        bcc: 'kritsada.s@assetwise.co.th',
         subject: 'ขอบคุณสำหรับการส่งผลงานเข้าร่วม The Happy Toilet Project',
         html: emailHTML,
       })
