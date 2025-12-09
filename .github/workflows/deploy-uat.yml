@@ -16,6 +16,15 @@ jobs:
 
       - name: Deploy to Lightsail
         uses: appleboy/ssh-action@v1.0.0
+        env:
+          HT_REGION: ${{ secrets.HT_REGION }}
+          HT_ACCESS_KEY_ID: ${{ secrets.HT_ACCESS_KEY_ID }}
+          HT_SECRET_ACCESS_KEY: ${{ secrets.HT_SECRET_ACCESS_KEY }}
+          HT_S3_BUCKET_NAME: ${{ secrets.HT_S3_BUCKET_NAME }}
+          HT_DYNAMODB_TABLE: ${{ secrets.HT_DYNAMODB_TABLE }}
+          HT_EMAIL_ADDR: ${{ secrets.HT_EMAIL_ADDR }}
+          HT_EMAIL_PWD: ${{ secrets.HT_EMAIL_PWD }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
         with:
           host: ${{ secrets.SERVER_HOST_UAT }}
           username: ${{ secrets.SERVER_USER }}
@@ -29,6 +38,19 @@ jobs:
             # Pull latest changes
             echo "📥 Pulling latest code..."
             git pull origin dev
+            
+            # Create/update .env.local file with environment variables
+            echo "🔐 Configuring environment variables..."
+            cat > .env.local << EOF
+            HT_REGION=${HT_REGION}
+            HT_ACCESS_KEY_ID=${HT_ACCESS_KEY_ID}
+            HT_SECRET_ACCESS_KEY=${HT_SECRET_ACCESS_KEY}
+            HT_S3_BUCKET_NAME=${HT_S3_BUCKET_NAME}
+            HT_DYNAMODB_TABLE=${HT_DYNAMODB_TABLE}
+            HT_EMAIL_ADDR=${HT_EMAIL_ADDR}
+            HT_EMAIL_PWD=${HT_EMAIL_PWD}
+            NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
+            EOF
             
             # Install dependencies
             echo "📦 Installing dependencies..."
