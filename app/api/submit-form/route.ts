@@ -358,18 +358,12 @@ function generateEmailHTML(contestantName: string, contestantId: string): string
 }
 
 export async function POST(request: NextRequest) {
-  // Temporary debug logging
-  console.log('Runtime env check:', {
-    hasRegion: !!process.env.HT_REGION,
-    hasBucket: !!process.env.HT_S3_BUCKET_NAME,
-    hasTable: !!process.env.HT_DYNAMODB_TABLE,
-    allEnvKeys: Object.keys(process.env).filter(k => k.startsWith('HT_'))
-  })
   try {
     // Validate environment variables first
     const envValidation = validateEnvironmentVariables()
     if (!envValidation.valid) {
-      console.error('Missing environment variables:', envValidation.missing)
+      // Log count only to avoid exposing environment variable names
+      console.error(`Missing ${envValidation.missing.length} required environment variable(s)`)
       return NextResponse.json(
         { error: 'Server configuration error. Please contact the administrator.' },
         { status: 500 }

@@ -34,9 +34,34 @@ This document outlines all the security improvements implemented in the Happy To
 
 **Impact:** Prevents file type spoofing attacks
 
+### 4. Environment Variable Exposure Prevention
+**File:** `app/api/submit-form/route.ts`
+- ✅ Removed debug console.log that exposed all environment variable names
+- ✅ Modified error logging to only show count of missing env vars, not their names
+- ✅ Prevents information disclosure through server logs, error tracking services, or cloud logging
+
+**Before:**
+```javascript
+console.log('Runtime env check:', {
+  hasRegion: !!process.env.HT_REGION,
+  hasBucket: !!process.env.HT_S3_BUCKET_NAME,
+  hasTable: !!process.env.HT_DYNAMODB_TABLE,
+  allEnvKeys: Object.keys(process.env).filter(k => k.startsWith('HT_'))
+})
+console.error('Missing environment variables:', envValidation.missing)
+```
+
+**After:**
+```javascript
+// Debug logging removed entirely
+console.error(`Missing ${envValidation.missing.length} required environment variable(s)`)
+```
+
+**Impact:** Prevents attackers from discovering environment variable names and structure, which could aid in targeted attacks
+
 ## 🟠 HIGH Severity Vulnerabilities Fixed
 
-### 4. Cryptographically Secure ID Generation
+### 5. Cryptographically Secure ID Generation
 **Files:** 
 - `app/api/submit-form/route.ts` (imports crypto.randomUUID)
 - `app/Form.tsx` (uses crypto.randomUUID())
@@ -53,7 +78,7 @@ crypto.randomUUID()
 
 **Impact:** Prevents contestant ID prediction and enumeration attacks
 
-### 5. Comprehensive Input Validation & Sanitization
+### 6. Comprehensive Input Validation & Sanitization
 **File:** `app/api/submit-form/route.ts`
 
 Implemented for all fields:
@@ -70,7 +95,7 @@ Implemented for all fields:
 
 **Impact:** Prevents injection attacks (XSS, SQL/NoSQL injection)
 
-### 6. XSS Protection in Email Template
+### 7. XSS Protection in Email Template
 **File:** `app/api/submit-form/route.ts`
 
 **Function Added:** `escapeHtml()`
@@ -81,7 +106,7 @@ Implemented for all fields:
 
 ## 🟡 MEDIUM Severity Vulnerabilities Fixed
 
-### 7. Security Headers Implementation
+### 8. Security Headers Implementation
 **File:** `proxy.ts` (NEW - Next.js 16 convention)
 
 Implemented headers:
@@ -96,7 +121,7 @@ Implemented headers:
 
 **Note:** Next.js 16 deprecated `middleware.ts` in favor of `proxy.ts`
 
-### 8. Improved Error Handling
+### 9. Improved Error Handling
 **File:** `app/api/submit-form/route.ts`
 
 - ✅ Generic error messages returned to clients
@@ -106,7 +131,7 @@ Implemented headers:
 
 **Impact:** Prevents information disclosure attacks
 
-### 9. Environment Variables Validation
+### 10. Environment Variables Validation
 **File:** `app/api/submit-form/route.ts`
 
 - ✅ Validates all required environment variables at startup
@@ -122,7 +147,7 @@ Implemented headers:
 
 **Impact:** Prevents runtime errors due to misconfiguration
 
-### 10. DynamoDB Duplicate Check
+### 11. DynamoDB Duplicate Check
 **File:** `app/api/submit-form/route.ts`
 
 - ✅ Checks for existing contestant_id before insertion
@@ -131,7 +156,7 @@ Implemented headers:
 
 **Impact:** Ensures data integrity
 
-### 11. Filename Sanitization
+### 12. Filename Sanitization
 **File:** `app/api/submit-form/route.ts`
 
 - ✅ Replaces special characters with underscores
