@@ -67,7 +67,6 @@ export default function Form() {
   }
 
   const handleCompetitorTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('handleCompetitorTypeChange', e.target.value)
     const value = e.target.value
     if (value === 'team') {
       setCompetitorType('team')

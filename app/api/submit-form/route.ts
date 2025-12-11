@@ -102,7 +102,6 @@ async function getNextContestantId(category: string): Promise<string> {
 
         // Format: PREFIX + 5-digit zero-padded number
         const contestantId = `${prefix}${count.toString().padStart(5, '0')}`
-        console.log(`Generated contestant_id: ${contestantId}`)
         return contestantId
       } catch (error) {
         retries--
@@ -679,7 +678,6 @@ ${competitorType === 'team' ? `- **Team Member Names:** ${teamMemberName}` : ''}
         html: emailHTML,
       })
       
-      console.log(`Thank you email sent successfully to ${email}`)
     } catch (error) {
       console.error('Error sending thank you email:', error)
       // Don't fail the submission if email fails - just log the error
