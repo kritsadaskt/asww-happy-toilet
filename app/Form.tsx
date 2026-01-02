@@ -170,7 +170,7 @@ export default function Form() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {/* Left Column - Form */}
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold mb-6" style={{ color: '#371c5d' }}>
+            <h2 className="text-xl sm:text-2xl ghghh font-bold mb-6" style={{ color: '#371c5d' }}>
             ขอบคุณที่ร่วมกิจกรรม<br/>
             ติดตามผลประกาศรางวัลได้ที่นี่ เร็วๆ นี้
             </h2>
