@@ -12,26 +12,25 @@ export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const imageData = [
+    { src: "/gallery/TheHappyToiletProject_20.jpg", alt: "Gallery image 20", isSpan: true },
+    { src: "/gallery/TheHappyToiletProject_19.jpg", alt: "Gallery image 19", isSpan: false },
+    { src: "/gallery/TheHappyToiletProject_18.jpg", alt: "Gallery image 18", isSpan: false },
+    { src: "/gallery/TheHappyToiletProject_16.jpg", alt: "Gallery image 16", isSpan: false },
     { src: "/gallery/TheHappyToiletProject_01.jpg", alt: "Gallery image 1", isSpan: false },
     { src: "/gallery/TheHappyToiletProject_02.jpg", alt: "Gallery image 2", isSpan: false },
-    { src: "/gallery/TheHappyToiletProject_03.jpg", alt: "Gallery image 3", isSpan: true },
-    { src: "/gallery/TheHappyToiletProject_04.jpg", alt: "Gallery image 4", isSpan: false },
+    { src: "/gallery/TheHappyToiletProject_03.jpg", alt: "Gallery image 3", isSpan: false },
+    { src: "/gallery/TheHappyToiletProject_04.jpg", alt: "Gallery image 4", isSpan: true },
     { src: "/gallery/TheHappyToiletProject_05.jpg", alt: "Gallery image 5", isSpan: false },
-    { src: "/gallery/TheHappyToiletProject_06.jpg", alt: "Gallery image 6", isSpan: true },
-    { src: "/gallery/TheHappyToiletProject_07.jpg", alt: "Gallery image 7", isSpan: false },
+    { src: "/gallery/TheHappyToiletProject_06.jpg", alt: "Gallery image 6", isSpan: false },
+    { src: "/gallery/TheHappyToiletProject_07.jpg", alt: "Gallery image 7", isSpan: true },
     { src: "/gallery/TheHappyToiletProject_08.jpg", alt: "Gallery image 8", isSpan: false },
     { src: "/gallery/TheHappyToiletProject_09.jpg", alt: "Gallery image 9", isSpan: false },
     { src: "/gallery/TheHappyToiletProject_10.jpg", alt: "Gallery image 10", isSpan: false },
     { src: "/gallery/TheHappyToiletProject_11.jpg", alt: "Gallery image 11", isSpan: false },
-    { src: "/gallery/TheHappyToiletProject_12.jpg", alt: "Gallery image 12", isSpan: true },
+    { src: "/gallery/TheHappyToiletProject_12.jpg", alt: "Gallery image 12", isSpan: false },
     { src: "/gallery/TheHappyToiletProject_13.jpg", alt: "Gallery image 13", isSpan: false },
     { src: "/gallery/TheHappyToiletProject_14.jpg", alt: "Gallery image 14", isSpan: false },
     { src: "/gallery/TheHappyToiletProject_15.jpg", alt: "Gallery image 15", isSpan: false },
-    { src: "/gallery/TheHappyToiletProject_16.jpg", alt: "Gallery image 16", isSpan: true },
-    { src: "/gallery/TheHappyToiletProject_17.jpg", alt: "Gallery image 17", isSpan: false },
-    { src: "/gallery/TheHappyToiletProject_18.jpg", alt: "Gallery image 18", isSpan: false },
-    { src: "/gallery/TheHappyToiletProject_19.jpg", alt: "Gallery image 19", isSpan: false },
-    { src: "/gallery/TheHappyToiletProject_20.jpg", alt: "Gallery image 20", isSpan: false },
   ];
 
   // Close lightbox on ESC key
