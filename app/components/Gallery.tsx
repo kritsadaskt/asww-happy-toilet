@@ -2,6 +2,11 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -58,9 +63,42 @@ export default function Gallery() {
 
   return (
     <div className="py-12" style={{ background: 'linear-gradient(135deg, #9862bf 0%, #ff37ad 100%)' }}>
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4">
             <h2 className="text-4xl font-semibold text-center text-white mb-7">ประมวลภาพกิจกรรม</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4 auto-rows-max">
+            
+            {/* Swiper for Mobile */}
+            <div className="md:hidden">
+                <Swiper
+                    modules={[Navigation, Pagination]}
+                    spaceBetween={20}
+                    slidesPerView={1}
+                    loop={true}
+                    autoplay={{ delay: 2500, disableOnInteraction: false }}
+                    navigation
+                    pagination={{ clickable: true, type: 'fraction' }}
+                    className="w-full"
+                >
+                    {imageData.map((image, index) => (
+                        <SwiperSlide key={index}>
+                            <div
+                                className="cursor-pointer"
+                                onClick={() => openLightbox(image.src)}
+                            >
+                                <Image 
+                                    src={image.src} 
+                                    alt={image.alt} 
+                                    width={800} 
+                                    height={600} 
+                                    className="w-full h-auto rounded-lg object-cover" 
+                                />
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+
+            {/* Masonry Grid for Desktop */}
+            <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4 auto-rows-max">
                 {imageData.map((image, index) => (
                 <div
                     key={index}

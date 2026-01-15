@@ -1,12 +1,77 @@
+'use client';
+
+import { useState } from 'react';
+
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <header className="w-full bg-white h-15 shadow-md relative z-50">
       <div className="container mx-auto flex items-center justify-between h-full px-4 md:px-0 max-w-5xl">
         <img src="https://assetwise.co.th/wp-content/themes/seed-spring/img/asw-logo_horizontal.svg" alt="AssetWise Logo" className="w-[120px] h-auto" />
-        <ul className="flex items-center justify-center gap-4">
+        
+        {/* Hamburger Button - Mobile Only */}
+        <button
+          onClick={toggleMenu}
+          className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none"
+          aria-label="Toggle menu"
+          aria-expanded={isMenuOpen}
+        >
+          <span
+            className={`block w-6 h-0.5 bg-primary transition-all duration-300 ${
+              isMenuOpen ? 'rotate-45 translate-y-2' : ''
+            }`}
+          />
+          <span
+            className={`block w-6 h-0.5 bg-primary transition-all duration-300 ${
+              isMenuOpen ? 'opacity-0' : ''
+            }`}
+          />
+          <span
+            className={`block w-6 h-0.5 bg-primary transition-all duration-300 ${
+              isMenuOpen ? '-rotate-45 -translate-y-2' : ''
+            }`}
+          />
+        </button>
+
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex items-center justify-center gap-4">
           <li><a href="/">หน้าแรก</a></li>
           <li><a href="/competitor-list">รายชื่อผู้เข้าประกวด</a></li>
           <li><a href="/contest-info">ข้อมูลโครงการ</a></li>
+        </ul>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`md:hidden absolute top-full left-0 w-full bg-white shadow-lg transition-all duration-300 ease-in-out ${
+          isMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+        }`}
+      >
+        <ul className="flex flex-col px-4 py-4 gap-4">
+          <li>
+            <a href="/" onClick={closeMenu} className="block py-2 text-primary hover:text-primary-300">
+              หน้าแรก
+            </a>
+          </li>
+          <li>
+            <a href="/competitor-list" onClick={closeMenu} className="block py-2 text-primary hover:text-primary-300">
+              รายชื่อผู้เข้าประกวด
+            </a>
+          </li>
+          <li>
+            <a href="/contest-info" onClick={closeMenu} className="block py-2 text-primary hover:text-primary-300">
+              ข้อมูลโครงการ
+            </a>
+          </li>
         </ul>
       </div>
     </header>

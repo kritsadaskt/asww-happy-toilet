@@ -1,6 +1,6 @@
 {
   "name": "asw-happy-toilet",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -16,7 +16,8 @@
     "next": "^16.1.2",
     "nodemailer": "^7.0.10",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "swiper": "^12.0.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
