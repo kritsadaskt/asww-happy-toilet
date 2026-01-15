@@ -55,7 +55,7 @@ const ext_juries = [
 
 function footer () {
   return(
-    <footer className='pt-10'>
+    <footer className='pt-15'>
       <div className="container mx-auto gap-0 md:gap-5 flex flex-col md:flex-row px-3 2xl:px-0">
         <div className="juries w-full md:w-2/3">
           <h4 className="font-semibold text-2xl md:text-3xl mb-2 md:mb-4">คณะกรรมการตัดสิน</h4>
