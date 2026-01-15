@@ -10,11 +10,25 @@ export default function Home() {
       <Image src="happy_toilet_mobile_banner.png" alt="ASW Happy Toilet KV" className="w-full h-auto md:hidden" width={1866} height={933}/>
     </section>
     <div id="announcement" className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 max-w-5xl">
-      <h1 className="text-2xl text-center sm:text-3xl md:text-4xl font-bold mb-0 leading-snug sm:leading-relaxed text-primary mb-4">
-        ประกาศผลการประกวด<br/>สุขา สุขี : THE HAPPY TOILET
-      </h1>
-      <p className="text-center text-lg leading-relaxed mb-4 sm:mb-6 text-primary">
-        ขอแสดงความยินดีกับผู้เข้าประกวดที่ได้รับรางวัล และขอขอบคุณทุกท่านที่เข้าร่วมกิจกรรม
+      <p className="text-center text-lg leading-relaxed text-primary">
+        ขอบคุณทุกไอเดียที่ร่วมกันสร้าง
+      </p>
+      <p className="text-center text-2xl md:text-3xl leading-relaxed text-primary my-3">
+        <strong>“สุขา สุขี : THE HAPPY TOILET”</strong>
+      </p>
+      <p className="text-center md:text-lg leading-relaxed mb-4 text-primary">
+        ผลงานทุกชิ้นได้รับการพิจารณาอย่างรอบคอบ<br/>
+        โดยคณะกรรมการจาก AssetWise<br/>
+        ร่วมกับผู้ทรงคุณวุฒิและกรรมการอิสระจากหลากหลายหน่วยงาน ได้แก่
+      </p>
+      <ul className="w-fit mx-auto mb-4 text-primary list-disc list-inside">
+        <li>สมาคมสถาปนิกสยาม ในพระบรมราชูปถัมภ์</li>
+        <li>สมาคมภูมิสถาปนิกประเทศไทย</li>
+        <li>สมาคมมัณฑนากรแห่งประเทศไทย</li>
+        <li>ตัวแทนจากกรุงเทพมหานคร</li>
+      </ul>
+      <p className="text-center md:text-lg leading-relaxed mb-4 text-primary">
+        เพื่อคัดเลือกแนวคิดที่สามารถยกระดับคุณภาพชีวิตและสร้างความสุขให้ทุกคนอย่างแท้จริง
       </p>
       <div className="h-7"></div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">

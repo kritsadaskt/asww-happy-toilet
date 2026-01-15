@@ -1,3 +1,4 @@
+import Image from "next/image";
 const asw_juries = [
   {
     'name': 'คุณกรมเชษฐ์ วิพันธ์พงษ์',
@@ -85,7 +86,7 @@ function footer () {
         <div className='mt-4 md:mt-0 w-full md:w-1/3'>
           <h4 className="font-semibold text-2xl md:text-3xl mb-4">สนับสนุนโดย</h4>
           <div className="footer-sponsors-logo flex items-center mb-5">
-            
+            <Image src="/asw-logo.png" alt="ASW Logo" width={100} height={100} />
           </div>
           <div className='h-5'></div>
         </div> 
