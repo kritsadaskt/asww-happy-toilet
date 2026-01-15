@@ -37,3 +37,19 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.bg-gold {
+  /* background: linear-gradient(100deg, #FCF6BA 0%, #AA771C 100%); */
+  color: #ffffff;
+  background: #ddaa14;
+}
+
+.bg-silver {
+  color: #ffffff;
+  background: #c0c0c0;
+}
+
+.bg-bronze {
+  color: #ffffff;
+  background-color: #884ea0;
+}

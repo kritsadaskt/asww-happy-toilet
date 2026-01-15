@@ -4,9 +4,9 @@ export default function Header() {
       <div className="container mx-auto flex items-center justify-between h-full px-4 md:px-0 max-w-5xl">
         <img src="https://assetwise.co.th/wp-content/themes/seed-spring/img/asw-logo_horizontal.svg" alt="AssetWise Logo" className="w-[120px] h-auto" />
         <ul className="flex items-center justify-center gap-4">
-          <li><a href="/">Home</a></li>
-          <li><a href="#main-objective">Concept</a></li>
-          <li><a href="#form">Submit</a></li>
+          <li><a href="/">หน้าแรก</a></li>
+          <li><a href="/competitor-list">รายชื่อผู้เข้าประกวด</a></li>
+          <li><a href="/contest-info">ข้อมูลโครงการ</a></li>
         </ul>
       </div>
     </header>
