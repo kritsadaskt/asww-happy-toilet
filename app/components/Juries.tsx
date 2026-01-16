@@ -48,7 +48,7 @@ export default function Juries() {
         <div className="juries w-full md:w-2/3">
           <h4 className="font-semibold text-2xl md:text-3xl mb-2 md:mb-4">คณะกรรมการตัดสิน</h4>
           <div className="juries-listed">
-            <h5 className="font-semibold text-lg mb-2 md:mb-4">กรรมการอิสระ 4 ท่าน</h5>
+            <h5 className="font-semibold text-lg mb-2 md:mb-4">คณะกรรมการอิสระ</h5>
             <ul>              
             {ext_juries.map((item, i) => (
               <li key={i} className="mb-3">
@@ -59,7 +59,7 @@ export default function Juries() {
             ))}
             </ul>
             <div className="h-7"></div>
-            <h5 className="font-semibold text-lg mb-2 md:mb-4">กรรมการจากบริษัท แอสเซทไวส์ จำกัด (มหาชน) 5 ท่าน</h5>
+            <h5 className="font-semibold text-lg mb-2 md:mb-4">คณะกรรมการจาก บริษัท แอสเซทไวส์ จำกัด (มหาชน)</h5>
             <ul className="">              
             {asw_juries.map((item, i) => (
               <li key={i} className="mb-3">
