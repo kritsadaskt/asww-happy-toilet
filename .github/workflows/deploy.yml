@@ -53,7 +53,9 @@ jobs:
             
             # Restart PM2
             echo "♻️ Restarting application..."
-            export PM2_HOME=/home/ubuntu/.pm2 && pm2 restart all --update-env
+            export PM2_HOME=/home/ubuntu/.pm2
+            cd /home/ubuntu/asww-happy-toilet
+            pm2 startOrReload ecosystem.config.js --update-env
             
             # Show status
             echo "✅ Deployment complete!"
