@@ -50,28 +50,29 @@ const honorableMentions = [
     university: 'มหาวิทยาลัยขอนเเก่น',
   },
 ];
+
 export default function HonorableMentions() {
   return (
-    <section id="honorable-mentions" className="pt-10">
-        <div className="container">
+    <section id="honorable-mentions" className="">
+        <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 max-w-6xl">
           <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
             <h2 className="text-2xl font-semibold mb-3" style={{ color: '#371c5d' }}>รางวัลชมเชย 10 รางวัล</h2>
-            <div className="table-responsive overflow-x-auto border border-gray-200 md:border-none">
-              <table className="w-[600px] md:w-full border-collapse md:rounded-lg overflow-x-auto shadow-sm bg-white">
+            <div className="table-responsive overflow-x-auto border border-gray-200 md:border-none mb-5">
+              <table className="w-[800px] md:w-full border-collapse md:rounded-lg overflow-x-auto shadow-sm bg-white">
                 <thead>
                   <tr style={{ background: 'linear-gradient(90deg,#ff37ad 0%,#9862bf 100%)' }}>
-                    <th className="px-4 py-3 text-left text-white text-lg font-medium">ชื่อผู้ส่งผลงาน</th>
-                    <th className="px-4 py-3 text-center text-white text-lg font-medium">ชื่อผลงาน</th>
-                    <th className="px-4 py-3 text-center text-white text-lg font-medium">สถานศึกษา</th>
+                    <th className="px-4 py-3 text-left text-white lg:text-lg font-medium">ชื่อผู้ส่งผลงาน</th>
+                    <th className="px-4 py-3 text-center text-white lg:text-lg font-medium">ชื่อผลงาน</th>
+                    <th className="px-4 py-3 text-center text-white lg:text-lg font-medium">สถานศึกษา</th>
                   </tr>
                   </thead>
                 <tbody>
                   {honorableMentions.map((mention, index) => (
-                    <tr className="even:bg-purple-50">
+                    <tr key={index} className="even:bg-purple-50">
                       {/* <td className="text-center text-primary text-lg font-medium px-4 py-3">{index + 1}.</td> */}
-                      <td className="px-4 py-3 text-left text-primary text-lg font-medium">{mention.name}</td>
-                      <td className="px-4 py-3 text-center text-primary text-lg">{mention.work_name}</td>
-                      <td className="px-4 py-3 text-center text-primary text-lg">{mention.university}</td>
+                      <td className="px-4 py-3 text-left text-primary lg:text-lg font-medium">{mention.name}</td>
+                      <td className="px-4 py-3 text-center text-primary lg:text-lg">{mention.work_name}</td>
+                      <td className="px-4 py-3 text-center text-primary lg:text-lg">{mention.university}</td>
                     </tr>
                   ))}
                 </tbody>
