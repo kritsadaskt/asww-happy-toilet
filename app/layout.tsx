@@ -13,15 +13,15 @@ const ibmPlexSansThai = IBM_Plex_Sans_Thai({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://thehappytoiletproject.com"),
   title: "สุขา สุขี : THE HAPPY TOILET",
-  description: "ชวนคุณออกแบบความสุข…ให้เกิดขึ้นจริง กับโครงการประกวดออกแบบห้องน้ำเพื่อสาธารณะ “สุขา สุขี : THE HAPPY TOILET” พร้อมโอกาสแปลงไอเดียเป็นงานสร้างจริง เงินรางวัลรวมมูลค่า 260,000 บาท",
+  description: "ชวนคุณออกแบบบความสุข เพื่อสร้างสรรค์ “ต้นแบบห้องน้ำสาธารณะคุณภาพสูง” ที่สามารถนำไปก่อสร้างหรือติดตั้งได้จริงในพื้นที่สาธารณะทั่วประเทศไทย",
   openGraph: {
     title: "สุขา สุขี : THE HAPPY TOILET",
-    description: "ชวนคุณออกแบบความสุข…ให้เกิดขึ้นจริง กับโครงการประกวดออกแบบห้องน้ำเพื่อสาธารณะ “สุขา สุขี : THE HAPPY TOILET” พร้อมโอกาสแปลงไอเดียเป็นงานสร้างจริง เงินรางวัลรวมมูลค่า 260,000 บาท",
+    description: "ชวนคุณออกแบบบความสุข เพื่อสร้างสรรค์ “ต้นแบบห้องน้ำสาธารณะคุณภาพสูง” ที่สามารถนำไปก่อสร้างหรือติดตั้งได้จริงในพื้นที่สาธารณะทั่วประเทศไทย",
     url: "https://thehappytoiletproject.com/",
     siteName: "สุขา สุขี : THE HAPPY TOILET",
     images: [
       {
-        url: "/happy_toilet_desktop_banner.png",
+        url: "/TheHappyToilet_KV_desktop.jpg",
         width: 1866,
         height: 933,
         alt: "สุขา สุขี : THE HAPPY TOILET",

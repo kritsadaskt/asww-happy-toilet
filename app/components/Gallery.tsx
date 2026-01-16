@@ -27,8 +27,8 @@ export default function Gallery() {
     { src: "/gallery/TheHappyToiletProject_11.jpg", alt: "Gallery image 11", isSpan: false },
     { src: "/gallery/TheHappyToiletProject_12.jpg", alt: "Gallery image 12", isSpan: false },
     { src: "/gallery/TheHappyToiletProject_13.jpg", alt: "Gallery image 13", isSpan: false },
-    { src: "/gallery/TheHappyToiletProject_14.jpg", alt: "Gallery image 14", isSpan: false },
-    { src: "/gallery/TheHappyToiletProject_15.jpg", alt: "Gallery image 15", isSpan: false },
+    // { src: "/gallery/TheHappyToiletProject_14.jpg", alt: "Gallery image 14", isSpan: false },
+    // { src: "/gallery/TheHappyToiletProject_15.jpg", alt: "Gallery image 15", isSpan: false },
   ];
 
   // Close lightbox on ESC key
