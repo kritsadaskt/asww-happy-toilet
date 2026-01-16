@@ -1,49 +1,122 @@
+import Gallery from "./components/Gallery";
 import Image from "next/image";
-import { Suspense } from "react";
 import Footer from "./Footer";
-import Form from "./Form";
-import Jury from "./components/Jury";
-import MainObjective from "./components/MainObjective";
-import EntryDetails from "./components/EntryDetails";
-import ScoringCategory from "./components/ScoringCategory";
-import Introduction from "./components/Introduction";
-import DesignChallenge from "./components/DesignChallenge";
-import AwardTypes from "./components/AwardTypes";
+import Juries from "./components/Juries";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-linear-to-b from-white via-purple-50 to-white">
-      {/* Key Visual Section */}
-      <section id="kv" className="w-full bg-white">
-        <Image src="happy_toilet_desktop_banner.png" alt="ASW Happy Toilet KV" className="w-full h-auto hidden md:block" width={1866} height={933}/>
-        <Image src="happy_toilet_mobile_banner.png" alt="ASW Happy Toilet KV" className="w-full h-auto md:hidden" width={1866} height={933}/>
-      </section>
-
-      {/* Main Content */}
-      <main className="">
-        
-        <Introduction/>
-        <MainObjective/>
-        <AwardTypes/>
-        <DesignChallenge/>
-        <ScoringCategory/>
-        <EntryDetails/>
-        <Jury/>
-          
-        {/* Call to Action */}
-        <section className="w-full px-4 py-6 text-center shadow-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #9862bf 0%, #ff37ad 100%)' }}>
-          <div className="container mx-auto px-0 py-8 max-w-5xl text-white text-[18px] md:text-3xl flex flex-col gap-2">
-            <p><strong>กำหนดส่งผลงาน :</strong> 17 พ.ย. - 31 ธ.ค. 2568</p>
-            <p><strong>ประกาศผล :</strong> 16 ม.ค. 2569</p>
+    <>
+    <section id="kv" className="w-full bg-white">
+      <Image src="TheHappyToilet_KV_desktop.jpg" alt="ASW Happy Toilet KV" className="w-full h-auto hidden md:block" width={1980} height={1080}/>
+      <Image src="TheHappyToilet_KV_mob.jpg" alt="ASW Happy Toilet KV" className="w-full h-auto md:hidden" width={1040} height={1040}/>
+    </section>
+    <div id="winners" className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 max-w-5xl">
+      <div className="intro-text-box text-center lg:text-xl flex flex-col gap-4">
+        <p className="leading-relaxed mb-4 text-primary">
+        "บทสรุปแห่งความสุข… ขอขอบคุณทุกความคิดสร้างสรรค์ที่ร่วมออกแบบสุขาเพื่อสาธารณะ"
+        </p>
+        <p className="leading-relaxed mb-4 text-primary">
+        โครงการ <strong>"สุขา สุขี : THE HAPPY TOILET"</strong><br/>
+        ในวาระฉลองครบรอบ 20 ปี AssetWise ได้สิ้นสุดลงแล้วอย่างงดงาม
+        <br/>
+        <br/>
+        บริษัท แอสเซทไวส์ จำกัด (มหาชน) ขอขอบพระคุณ สถาปนิก นิสิต นักศึกษา<br/>และประชาชนทั่วไปทุกท่านที่ร่วมส่งต่อพลังแห่งการออกแบบเพื่อสังคม
+        </p>
+        <p className="leading-relaxed mb-4 text-primary">
+        ทุกผลงานที่ส่งเข้ามาไม่เพียงแต่แสดงถึงศักยภาพด้านการออกแบบ<br/>แต่ยังสะท้อนถึงความตั้งใจที่จะยกระดับคุณภาพชีวิตและสุขอนามัยที่ดีให้กับคนไทย ตามแนวคิด
+        </p>
+        <p className="mb-4 text-2xl font-semibold text-primary">We Build Happiness</p>
+        <p className="leading-relaxed mb-4 text-primary">
+        แม้การประกวดจะสิ้นสุดลง แต่ความมุ่งมั่นในการสร้างสรรค์สังคมของ AssetWise ยังคงดำเนินต่อไป<br/>แล้วพบกันใหม่กับกิจกรรมดีๆ และพื้นที่สร้างสรรค์เพื่อสังคมจากเราในโอกาสหน้า
+        </p>
+      </div>
+      <div className="h-7 hidden md:block"></div>
+      <Image src="winner_list_desktop.jpg" alt="Winner List" className="w-full h-auto" width={1866} height={933}/>
+      <div id="results" className="hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#371c5d' }}>กลุ่มบริษัทผู้ออกแบบวิชาชีพ</h2>
+            <div className="winner flex w-full gap-4">
+              <div className="name">
+                <span>รางวัลชนะเลิศ</span>
+                <p className="text-3xl font-medium">นายสมชาย ใจดี</p>
+              </div>
+              <div className="award flex items-end justify-center">
+                <img src="/winner.png" alt="winner" width={50} height={50} />
+              </div>
+            </div>
+            <div className="1st_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 1</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+            </div>
+            <div className="2nd_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 2</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+            </div>
           </div>
-        </section>
 
-        <Suspense fallback={<div className="container mx-auto px-4 py-12">Loading...</div>}>
-          <Form/>
-        </Suspense>
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#371c5d' }}>กลุ่มผู้ออกแบบอิสระ และประชาชนทั่วไป</h2>
+            <div className="winner flex w-full gap-4">
+              <div className="name">
+                <span>รางวัลชนะเลิศ</span>
+                <p className="text-3xl font-medium">นายสมชาย ใจดี</p>
+              </div>
+              <div className="award flex items-end justify-center">
+                <img src="/winner.png" alt="winner" width={50} height={50} />
+              </div>
+            </div>
+            <div className="1st_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 1</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+            </div>
+            <div className="2nd_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 2</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+            </div>
+          </div>
+        </div>
 
-      </main>
-      <Footer />
+        <div className="h-10"></div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#371c5d' }}>กลุ่มนักเรียน/นิสิต/นักศึกษา</h2>
+            <div className="winner flex w-full gap-4">
+              <div className="name">
+                <span>รางวัลชนะเลิศ</span>
+                <p className="text-3xl font-medium">นายสมชาย ใจดี</p>
+              </div>
+              <div className="award flex items-end justify-center">
+                <img src="/winner.png" alt="winner" width={50} height={50} />
+              </div>
+            </div>
+            <div className="1st_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 1</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+            </div>
+            <div className="2nd_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 2</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
+            <h2 className="text-2xl font-semibold mb-2" style={{ color: '#371c5d' }}>รางวัลชมเชย กลุ่มนักเรียน/นิสิต/นักศึกษา</h2>
+            <div className="name-listed text-xl flex flex-col gap-2">
+              <p>นายสมชาย ใจดี</p>
+              <p>นายสมชาย ใจดี</p>
+              <p>นายสมชาย ใจดี, นางสาวสมหญิง ใจดี, นายปิติ มงคลสุข</p>
+              <p>นายสมชาย ใจดี</p>
+              <p>นายสมชาย ใจดี</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <Gallery />
+    <Juries />
+    <Footer />
+    </>
   );
 }
