@@ -32,10 +32,12 @@ export default function Home() {
         </p>
       </div>
       <div className="h-7 hidden md:block"></div>
-      <Image src="winner_list_desktop_rv1.jpg" alt="Winner List" className="w-full h-auto" width={1866} height={933}/>
 
-      <HonorableMentions />
+      <Image src="winner_list_desktop_rv2.jpg" alt="Winner List" className="w-full h-auto" width={1866} height={933}/>
+
+      
     </div>
+    <HonorableMentions />
     <Gallery />
     <Juries />
     <Footer />
