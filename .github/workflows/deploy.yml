@@ -53,7 +53,7 @@ jobs:
             
             # Restart PM2
             echo "♻️ Restarting application..."
-            pm2 restart nextjs-app
+            pm2 restart all
             
             # Show status
             echo "✅ Deployment complete!"
