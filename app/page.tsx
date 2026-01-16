@@ -2,6 +2,7 @@ import Gallery from "./components/Gallery";
 import Image from "next/image";
 import Footer from "./Footer";
 import Juries from "./components/Juries";
+import HonorableMentions from "./components/HonorableMentions";
 
 export default function Home() {
   return (
@@ -32,6 +33,9 @@ export default function Home() {
       </div>
       <div className="h-7 hidden md:block"></div>
       <Image src="winner_list_desktop.jpg" alt="Winner List" className="w-full h-auto" width={1866} height={933}/>
+
+      <HonorableMentions />
+
       <div id="results" className="hidden">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
