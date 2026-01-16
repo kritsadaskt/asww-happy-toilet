@@ -45,9 +45,9 @@ export default function Header() {
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center justify-center gap-4">
           <li><a href="/">Home</a></li>
-          <li><a href="#winners">Award Winners</a></li>
+          <li><a href="/#winners">Award Winners</a></li>
           <li><a href="/concept">Concept</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="/#contact">Contact</a></li>
         </ul>
       </div>
 
@@ -60,17 +60,22 @@ export default function Header() {
         <ul className="flex flex-col px-4 py-4 gap-4">
           <li>
             <a href="/" onClick={closeMenu} className="block py-2 text-primary hover:text-primary-300">
-              หน้าแรก
+              Home
             </a>
           </li>
           <li>
-            <a href="/competitor-list" onClick={closeMenu} className="block py-2 text-primary hover:text-primary-300">
-              รายชื่อผู้เข้าประกวด
+            <a href="/#winners" onClick={closeMenu} className="block py-2 text-primary hover:text-primary-300">
+              Award Winners
             </a>
           </li>
           <li>
-            <a href="/contest-info" onClick={closeMenu} className="block py-2 text-primary hover:text-primary-300">
-              ข้อมูลโครงการ
+            <a href="/concept" onClick={closeMenu} className="block py-2 text-primary hover:text-primary-300">
+              Concept
+            </a>
+          </li>
+          <li>
+            <a href="/#contact" onClick={closeMenu} className="block py-2 text-primary hover:text-primary-300">
+              Contact
             </a>
           </li>
         </ul>
