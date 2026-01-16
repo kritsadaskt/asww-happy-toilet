@@ -44,9 +44,10 @@ export default function Header() {
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center justify-center gap-4">
-          <li><a href="/">หน้าแรก</a></li>
-          <li><a href="/competitor-list">รายชื่อผู้เข้าประกวด</a></li>
-          <li><a href="/contest-info">ข้อมูลโครงการ</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="#winners">Award Winners</a></li>
+          <li><a href="/concept">Concept</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
 
