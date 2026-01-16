@@ -30,83 +30,86 @@ export default function Home() {
       <p className="text-center md:text-lg leading-relaxed mb-4 text-primary">
         เพื่อคัดเลือกแนวคิดที่สามารถยกระดับคุณภาพชีวิตและสร้างความสุขให้ทุกคนอย่างแท้จริง
       </p>
-      <div className="h-7"></div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold mb-3" style={{ color: '#371c5d' }}>กลุ่มบริษัทผู้ออกแบบวิชาชีพ</h2>
-          <div className="winner flex w-full gap-4">
-            <div className="name">
-              <span>รางวัลชนะเลิศ</span>
-              <p className="text-3xl font-medium">นายสมชาย ใจดี</p>
+      <div className="h-7 hidden md:block"></div>
+      <Image src="winner_list_desktop.jpg" alt="Winner List" className="w-full h-auto" width={1866} height={933}/>
+      <div id="results" className="hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#371c5d' }}>กลุ่มบริษัทผู้ออกแบบวิชาชีพ</h2>
+            <div className="winner flex w-full gap-4">
+              <div className="name">
+                <span>รางวัลชนะเลิศ</span>
+                <p className="text-3xl font-medium">นายสมชาย ใจดี</p>
+              </div>
+              <div className="award flex items-end justify-center">
+                <img src="/winner.png" alt="winner" width={50} height={50} />
+              </div>
             </div>
-            <div className="award flex items-end justify-center">
-              <img src="/winner.png" alt="winner" width={50} height={50} />
+            <div className="1st_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 1</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+            </div>
+            <div className="2nd_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 2</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
             </div>
           </div>
-          <div className="1st_runner_up w-full">
-            <span>รองชนะเลิศอันดับ 1</span>
-            <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
-          </div>
-          <div className="2nd_runner_up w-full">
-            <span>รองชนะเลิศอันดับ 2</span>
-            <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#371c5d' }}>กลุ่มผู้ออกแบบอิสระ และประชาชนทั่วไป</h2>
+            <div className="winner flex w-full gap-4">
+              <div className="name">
+                <span>รางวัลชนะเลิศ</span>
+                <p className="text-3xl font-medium">นายสมชาย ใจดี</p>
+              </div>
+              <div className="award flex items-end justify-center">
+                <img src="/winner.png" alt="winner" width={50} height={50} />
+              </div>
+            </div>
+            <div className="1st_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 1</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+            </div>
+            <div className="2nd_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 2</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+            </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold mb-3" style={{ color: '#371c5d' }}>กลุ่มผู้ออกแบบอิสระ และประชาชนทั่วไป</h2>
-          <div className="winner flex w-full gap-4">
-            <div className="name">
-              <span>รางวัลชนะเลิศ</span>
-              <p className="text-3xl font-medium">นายสมชาย ใจดี</p>
-            </div>
-            <div className="award flex items-end justify-center">
-              <img src="/winner.png" alt="winner" width={50} height={50} />
-            </div>
-          </div>
-          <div className="1st_runner_up w-full">
-            <span>รองชนะเลิศอันดับ 1</span>
-            <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
-          </div>
-          <div className="2nd_runner_up w-full">
-            <span>รองชนะเลิศอันดับ 2</span>
-            <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
-          </div>
-        </div>
-      </div>
+        <div className="h-10"></div>
 
-      <div className="h-10"></div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold mb-3" style={{ color: '#371c5d' }}>กลุ่มนักเรียน/นิสิต/นักศึกษา</h2>
-          <div className="winner flex w-full gap-4">
-            <div className="name">
-              <span>รางวัลชนะเลิศ</span>
-              <p className="text-3xl font-medium">นายสมชาย ใจดี</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
+            <h2 className="text-2xl font-semibold mb-3" style={{ color: '#371c5d' }}>กลุ่มนักเรียน/นิสิต/นักศึกษา</h2>
+            <div className="winner flex w-full gap-4">
+              <div className="name">
+                <span>รางวัลชนะเลิศ</span>
+                <p className="text-3xl font-medium">นายสมชาย ใจดี</p>
+              </div>
+              <div className="award flex items-end justify-center">
+                <img src="/winner.png" alt="winner" width={50} height={50} />
+              </div>
             </div>
-            <div className="award flex items-end justify-center">
-              <img src="/winner.png" alt="winner" width={50} height={50} />
+            <div className="1st_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 1</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
+            </div>
+            <div className="2nd_runner_up w-full">
+              <span>รองชนะเลิศอันดับ 2</span>
+              <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
             </div>
           </div>
-          <div className="1st_runner_up w-full">
-            <span>รองชนะเลิศอันดับ 1</span>
-            <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
-          </div>
-          <div className="2nd_runner_up w-full">
-            <span>รองชนะเลิศอันดับ 2</span>
-            <p className="text-2xl font-medium">นายสมชาย ใจดี</p>
-          </div>
-        </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold mb-2" style={{ color: '#371c5d' }}>รางวัลชมเชย กลุ่มนักเรียน/นิสิต/นักศึกษา</h2>
-          <div className="name-listed text-xl flex flex-col gap-2">
-            <p>นายสมชาย ใจดี</p>
-            <p>นายสมชาย ใจดี</p>
-            <p>นายสมชาย ใจดี, นางสาวสมหญิง ใจดี, นายปิติ มงคลสุข</p>
-            <p>นายสมชาย ใจดี</p>
-            <p>นายสมชาย ใจดี</p>
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 border-t-4 border-primary flex flex-col gap-4">
+            <h2 className="text-2xl font-semibold mb-2" style={{ color: '#371c5d' }}>รางวัลชมเชย กลุ่มนักเรียน/นิสิต/นักศึกษา</h2>
+            <div className="name-listed text-xl flex flex-col gap-2">
+              <p>นายสมชาย ใจดี</p>
+              <p>นายสมชาย ใจดี</p>
+              <p>นายสมชาย ใจดี, นางสาวสมหญิง ใจดี, นายปิติ มงคลสุข</p>
+              <p>นายสมชาย ใจดี</p>
+              <p>นายสมชาย ใจดี</p>
+            </div>
           </div>
         </div>
       </div>
