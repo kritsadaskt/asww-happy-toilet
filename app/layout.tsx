@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "สุขา สุขี : THE HAPPY TOILET",
-    description: "ชวนคุณออกแบบความสุข…ให้เกิดขึ้นจริง กับโครงการประกวดออกแบบห้องน้ำเพื่อสาธารณะ “สุขา สุขี : THE HAPPY TOILET” พร้อมโอกาสแปลงไอเดียเป็นงานสร้างจริง เงินรางวัลรวมมูลค่า 260,000 บาท",
-    images: ["/happy_toilet_desktop_banner.png"],
+    description: "ชวนคุณออกแบบบความสุข เพื่อสร้างสรรค์ “ต้นแบบห้องน้ำสาธารณะคุณภาพสูง” ที่สามารถนำไปก่อสร้างหรือติดตั้งได้จริงในพื้นที่สาธารณะทั่วประเทศไทย",
+    images: ["/TheHappyToilet_KV_desktop.jpg"],
   },
 };
 

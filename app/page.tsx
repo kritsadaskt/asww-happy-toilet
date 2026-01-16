@@ -1,6 +1,7 @@
 import Gallery from "./components/Gallery";
 import Image from "next/image";
 import Footer from "./Footer";
+import Juries from "./components/Juries";
 
 export default function Home() {
   return (
@@ -11,11 +12,14 @@ export default function Home() {
     </section>
     <div id="winners" className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 max-w-5xl">
       <div className="intro-text-box text-center lg:text-xl flex flex-col gap-4">
-        <p className="leading-relaxed text-primary">
+        <p className="leading-relaxed mb-4 text-primary">
         "บทสรุปแห่งความสุข… ขอขอบคุณทุกความคิดสร้างสรรค์ที่ร่วมออกแบบสุขาเพื่อสาธารณะ"
         </p>
         <p className="leading-relaxed mb-4 text-primary">
-        โครงการ <strong>"สุขา สุขี : THE HAPPY TOILET"</strong> ในวาระฉลองครบรอบ 20 ปี AssetWise<br/>ได้สิ้นสุดลงแล้วอย่างงดงาม<br/>
+        โครงการ <strong>"สุขา สุขี : THE HAPPY TOILET"</strong><br/>
+        ในวาระฉลองครบรอบ 20 ปี AssetWise ได้สิ้นสุดลงแล้วอย่างงดงาม
+        <br/>
+        <br/>
         บริษัท แอสเซทไวส์ จำกัด (มหาชน) ขอขอบพระคุณ สถาปนิก นิสิต นักศึกษา<br/>และประชาชนทั่วไปทุกท่านที่ร่วมส่งต่อพลังแห่งการออกแบบเพื่อสังคม
         </p>
         <p className="leading-relaxed mb-4 text-primary">
@@ -111,6 +115,7 @@ export default function Home() {
       </div>
     </div>
     <Gallery />
+    <Juries />
     <Footer />
     </>
   );

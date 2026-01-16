@@ -37,11 +37,6 @@ export default function ContestInfo() {
             <p><strong>ประกาศผล :</strong> 16 ม.ค. 2569</p>
           </div>
         </section>
-
-        <Suspense fallback={<div className="container mx-auto px-4 py-12">Loading...</div>}>
-          <Form/>
-        </Suspense>
-
       </main>
       <Footer />
     </div>
