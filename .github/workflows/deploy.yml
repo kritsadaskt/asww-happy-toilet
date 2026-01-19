@@ -53,9 +53,7 @@ jobs:
             
             # Restart PM2
             echo "♻️ Restarting application..."
-            export PM2_HOME=/home/ubuntu/.pm2
-            cd /home/ubuntu/asww-happy-toilet
-            pm2 startOrReload ecosystem.config.js --update-env
+            pm2 restart nextjs-app
             
             # Show status
             echo "✅ Deployment complete!"

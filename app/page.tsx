@@ -3,6 +3,7 @@ import Image from "next/image";
 import Footer from "./Footer";
 import Juries from "./components/Juries";
 import HonorableMentions from "./components/HonorableMentions";
+import AwardWinners from "./components/AwardWinners";
 
 export default function Home() {
   return (
@@ -32,11 +33,8 @@ export default function Home() {
         </p>
       </div>
       <div className="h-7 hidden md:block"></div>
-
-      <Image src="winner_list_desktop_rv2.jpg" alt="Winner List" className="w-full h-auto" width={1866} height={933}/>
-
-      
     </div>
+    <AwardWinners />
     <HonorableMentions />
     <Gallery />
     <Juries />

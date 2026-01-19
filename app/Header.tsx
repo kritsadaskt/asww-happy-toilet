@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <header className="w-full bg-white h-15 shadow-md relative z-50">
-      <div className="container mx-auto flex items-center justify-between h-full px-4 md:px-0 max-w-5xl">
+      <div className="container mx-auto flex items-center justify-between h-full px-4 lg:px-0 max-w-5xl">
         <img src="https://assetwise.co.th/wp-content/themes/seed-spring/img/asw-logo_horizontal.svg" alt="AssetWise Logo" className="w-[120px] h-auto" />
         
         {/* Hamburger Button - Mobile Only */}
