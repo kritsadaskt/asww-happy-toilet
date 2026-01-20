@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { useState, useEffect } from "react";
 
 interface Winner {
   id: string;
@@ -104,46 +101,21 @@ const winnersData = [
 ]
 
 export default function AwardWinners() {
-  const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
-
-  // Close modal on ESC key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setSelectedPdf(null);
-      }
-    };
-
-    if (selectedPdf) {
-      document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden";
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "unset";
-    };
-  }, [selectedPdf]);
-
-  const openPdfModal = (contestantId: string) => {
-    setSelectedPdf(contestantId);
-  };
-
-  const closePdfModal = () => {
-    setSelectedPdf(null);
-  };
-
   const WinnerImage = ({ id, image, works_link, contestant_id }: { id: string, image: string, works_link: string, contestant_id: string }) => {
+    const pdfPath = `/awards-winner/${contestant_id}/${contestant_id}.pdf`;
+    
     return (
       <div className="flex flex-col gap-2">
         <Image src={image} alt={id} width={500} height={550} className="w-4/5 mx-auto md:w-auto rounded-xl" />
-        <button 
-          onClick={() => openPdfModal(contestant_id)}
+        <a 
+          href={pdfPath}
+          target="_blank"
+          rel="noopener noreferrer"
           data-contestant-id={contestant_id} 
           className="w-full cursor-pointer"
         >
           <Image src={`/awards-winner/${contestant_id}/${contestant_id}.jpg`} alt="view more" width={100} height={100} className="w-full rounded-lg" />
-        </button>
+        </a>
       </div>
     )
   }
@@ -185,30 +157,6 @@ export default function AwardWinners() {
         <p className="text-white text-sm md:-mt-20">*ทั้งนี้ การพิจารณาตัดสินของคณะกรรมการถือเป็นเด็ดขาด<br/>
         และเป็นที่สิ้นสุดในทุกกรณี โดยไม่สามารถโต้แย้งหรือเปลี่ยนแปลงใดๆ ในภายหลัง</p>
       </div>
-
-      {/* PDF Modal */}
-      {selectedPdf && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
-          onClick={closePdfModal}
-        >
-          <button
-            className="absolute top-4 right-4 text-white text-4xl font-bold hover:text-gray-300 z-10"
-            onClick={closePdfModal}
-            aria-label="Close PDF modal"
-          >
-            ×
-          </button>
-          <div className="relative max-w-7xl max-h-full w-full h-full" onClick={(e) => e.stopPropagation()}>
-            <embed
-              src={`/awards-winner/${selectedPdf}/${selectedPdf}.pdf`}
-              type="application/pdf"
-              className="w-full h-full min-h-[90vh] rounded-lg"
-              title={`PDF for ${selectedPdf}`}
-            />
-          </div>
-        </div>
-      )}
     </section>
   )
 } 
