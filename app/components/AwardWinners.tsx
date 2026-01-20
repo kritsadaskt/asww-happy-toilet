@@ -114,7 +114,7 @@ export default function AwardWinners() {
           data-contestant-id={contestant_id} 
           className="w-full cursor-pointer"
         >
-          <Image src={`/awards-winner/${contestant_id}/${contestant_id}.jpg`} alt="view more" width={100} height={100} className="w-full rounded-lg" />
+          <Image src={`/awards-winner/${contestant_id}/${contestant_id}.jpg`} alt="view more" width={100} height={100} className="w-full rounded-lg aspect-video object-cover" />
         </a>
       </div>
     )
